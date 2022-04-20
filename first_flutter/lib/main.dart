@@ -25,11 +25,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'e'),
-<<<<<<< HEAD
       //commentzzzzzzz
-=======
       // comment bankkk
->>>>>>> origin/bank
     );
   }
 }
