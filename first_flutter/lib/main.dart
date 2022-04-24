@@ -9,20 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text('Deal'),
-          ),
-          body: Column(
-            children: [
-              Text('Question : '),
-              RaisedButton(
-                child: Text("Answer 1 "),
-                onPressed: () => print('test'),
-              )
-            ],
-          )),
-    );
+    
   }
 }
