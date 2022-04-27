@@ -1,6 +1,25 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+
+
+
+class Home extends StatefulWidget {
+  const Home({ Key? key }) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  File? _image;
+  Future getImage() async{
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(image!.path);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,20 +37,25 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                   children: [
                     SizedBox(
-                      child: ElevatedButton(
-                          onPressed: () {},
-                          child: SizedBox(
-                            height: 100,
-                            width: 100,
-                          )),
+                      child: ElevatedButton.icon(
+                        
+                        onPressed: (){
+                            getImage();
+                            print("getimage");
+                          _image != null ? Image.file(
+                            _image!):
+                        }),
                     ),
                     SizedBox(
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          child: ElevatedButton(onPressed: (){},
+                          child: ElevatedButton(onPressed: (){
+                          },
                           child: Text("Register")),
                         ),
+                        SizedBox(width: 100,),
                         SizedBox(
                           child: ElevatedButton(onPressed: (){},
                           child: Text("Back")),
@@ -42,5 +66,13 @@ class HomeScreen extends StatelessWidget {
                 ))
               ],
             )));
+  }
+}
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      
+    );
   }
 }
