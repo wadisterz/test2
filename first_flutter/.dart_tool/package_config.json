@@ -38,6 +38,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "community_material_icon",
+      "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/community_material_icon-5.9.55",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "cross_file",
       "rootUri": "file:///C:/src/flutter/.pub-cache/hosted/pub.dartlang.org/cross_file-0.3.2",
       "packageUri": "lib/",
@@ -230,7 +236,7 @@
       "languageVersion": "2.16"
     }
   ],
-  "generated": "2022-04-27T22:06:59.842600Z",
+  "generated": "2022-04-28T12:59:11.975830Z",
   "generator": "pub",
   "generatorVersion": "2.16.2"
 }

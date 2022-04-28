@@ -2,24 +2,22 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
-
-
-
-class Home extends StatefulWidget {
-  const Home({ Key? key }) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<RegisterPage> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<RegisterPage> {
   File? _image;
-  Future getImage() async{
+  Future getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
       _image = File(image!.path);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,29 +34,52 @@ class _HomeState extends State<Home> {
                 Container(
                     child: Column(
                   children: [
-                    SizedBox(
-                      child: ElevatedButton.icon(
-                        
-                        onPressed: (){
-                            getImage();
-                            print("getimage");
-                          _image != null ? Image.file(
-                            _image!):
-                        }),
+                    TextField(
+                      style: TextStyle(height: 0.4),
+                      decoration: InputDecoration(
+                          hintText: 'username',
+                          counterText: "",
+                              border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color.fromRGBO(184, 255, 249, 100)),
+                              borderRadius: 
+                              BorderRadius.circular(14.0)
+                              ),
+                          fillColor: Color.fromRGBO(184, 255, 249, 100),
+                          filled: true
+                          ),
+                          
+                      maxLength: 20,
+                    ),
+                    TextField(
+                      style: TextStyle(height: 0.4),
+                      decoration: InputDecoration(
+                          hintText: 'email',
+                          counterText: "",
+                              border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color.fromRGBO(184, 255, 249, 100)),
+                              borderRadius: 
+                              BorderRadius.circular(14.0)
+                              ),
+                          fillColor: Color.fromRGBO(184, 255, 249, 100),
+                          filled: true
+                          ),
+                          
+                      maxLength: 20,
                     ),
                     SizedBox(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          child: ElevatedButton(onPressed: (){
-                          },
-                          child: Text("Register")),
+                          child: ElevatedButton(
+                              onPressed: () {}, child: Text("Register")),
                         ),
-                        SizedBox(width: 100,),
                         SizedBox(
-                          child: ElevatedButton(onPressed: (){},
-                          child: Text("Back")),
+                          width: 50,
+                        ),
+                        SizedBox(
+                          child: ElevatedButton(
+                              onPressed: () {}, child: Text("Back")),
                         )
                       ],
                     ))
@@ -68,11 +89,10 @@ class _HomeState extends State<Home> {
             )));
   }
 }
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      
-    );
+    return Scaffold();
   }
 }
