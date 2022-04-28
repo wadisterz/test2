@@ -25,7 +25,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'e'),
+<<<<<<< HEAD
       // somecomment
+=======
+<<<<<<< HEAD
+      //commentzzzzzzz
+=======
+      // comment bankkk
+>>>>>>> origin/bank
+>>>>>>> refs/remotes/origin/main
     );
   }
 }
