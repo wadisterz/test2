@@ -1,18 +1,20 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:first_flutter/Register.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Deal_Demo',
+      home: RegisterPage(),
       theme: ThemeData(
+<<<<<<< HEAD
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -113,12 +115,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+=======
+        primaryColor: Color.fromRGBO(133, 244, 255, 1),
+        backgroundColor: Color.fromRGBO(133, 244, 255, 1)
+>>>>>>> bank
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
