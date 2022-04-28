@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:first_flutter/home.dart';
+import 'package:first_flutter/Register.dart';
 import 'package:flutter/material.dart';
 
 void main() {

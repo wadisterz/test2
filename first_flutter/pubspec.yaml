@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.5
   community_material_icon: ^5.9.55
+  font_awesome_flutter: ^10.1.0
+  form_field_validator: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -60,10 +62,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
+  assets:
+    - images/handshake.png
+    - images/default.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
