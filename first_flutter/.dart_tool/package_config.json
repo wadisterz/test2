@@ -314,11 +314,7 @@
       "languageVersion": "2.16"
     }
   ],
-<<<<<<< HEAD
-  "generated": "2022-04-28T22:49:26.143352Z",
-=======
-  "generated": "2022-04-29T03:40:05.454732Z",
->>>>>>> bank
+  "generated": "2022-04-29T14:39:55.839940Z",
   "generator": "pub",
   "generatorVersion": "2.16.2"
 }
