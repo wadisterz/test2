@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\flutter2\\test2\\first_flutter\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "C:\\Users\\waray\\Desktop\\New folder\\first_flutter\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\waray\\.gradle\\caches\\transforms-2\\files-2.1\\122df2e57d294d1a53db26bbc3b813c1\\core-1.6.0\\res\\values\\values.xml",
@@ -42,7 +42,7 @@
                     }
                 },
                 {
-                    "source": "D:\\flutter2\\test2\\first_flutter\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "C:\\Users\\waray\\Desktop\\New folder\\first_flutter\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
