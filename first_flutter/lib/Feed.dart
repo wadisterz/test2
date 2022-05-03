@@ -1,7 +1,9 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
-import 'package:first_flutter/Profile.dart';
+import 'package:first_flutter/Feed.dart';
+import 'package:first_flutter/Model/Profile.dart';
+import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +13,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
@@ -20,14 +23,47 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedState extends State<FeedPage> {
+  File? _image;
+  Future getImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(image!.path);
+    });
+  }
+
+  final Future<FirebaseApp> firebase = Firebase.initializeApp();
+
+  final formKey = GlobalKey<FormState>();
+
+  Profile profile = Profile(uid: '' ,username: '', password: '', email: '');
+  bool _showPassword = true;
+  String? _Cpassword;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-                backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-    );
-      
-    
+    return FutureBuilder(
+        future: firebase,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("Error"),
+              ),
+              body: Center(child: Text("${snapshot.error}")),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text("test"),
+              ),
+                backgroundColor:Color.fromRGBO(133, 244, 255, 1),
 
+            );
+          }
+          return Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        });
   }
 }
