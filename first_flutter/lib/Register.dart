@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 import 'package:first_flutter/Login.dart';
-import 'package:first_flutter/Profile.dart';
+import 'package:first_flutter/Model/Profile.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,8 +13,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
-
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+}
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -30,20 +33,17 @@ class _HomeState extends State<RegisterPage> {
     setState(() {
       _image = File(image!.path);
     });
-    }
-  
-    //FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  
+  }
 
+  //FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
   final formKey = GlobalKey<FormState>();
-  CollectionReference userCollection = FirebaseFirestore.instance.collection("user");
+  CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("user");
 
-  Profile profile = Profile(uid: '',username: '', password: '', email: '');
+  Profile profile = Profile(uid: '', username: '', password: '', email: '');
   bool _showPassword = true;
   String? _Cpassword;
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +60,7 @@ class _HomeState extends State<RegisterPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
-                backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-                body: Container(
+                backgroundColor: Color.fromRGBO(133, 244, 255, 1), body: Container(
                     child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 50, 20, 1),
                         child: Form(
@@ -77,11 +76,10 @@ class _HomeState extends State<RegisterPage> {
                                       children: [
                                         SizedBox(height: 50),
                                         Image.asset(
-                                          ('images/default.png'),
-                                          width: 150,
-                                          height: 150,
-                                        ),
-                                        SizedBox(height: 50),
+                                       ('images/handshake.png'),
+                                       width: 150,
+                                       height: 150,
+                                       ),
                                         TextFormField(
                                           validator:
                                               RequiredValidator(errorText: "*"),
@@ -263,34 +261,42 @@ class _HomeState extends State<RegisterPage> {
                                                         return null;
                                                       }
                                                       try {
-                                                        await FirebaseAuth.instance
+                                                        await FirebaseAuth
+                                                            .instance
                                                             .createUserWithEmailAndPassword(
                                                                 email: profile
                                                                     .email,
                                                                 password: profile
                                                                     .password)
-                                                                    
-                                                            .then((value) async
-                                                            {
-                                                              profile.uid = value.user!.uid;
-                                                          await firebase.then((value) async{
-                                                              await userCollection.add({
-                                                                "username":profile.username,
-                                                                "email":profile.email,
-                                                              });
-                                                              
-                                                          formKey.currentState!
-                                                              .reset();
+                                                            .then(
+                                                                (value) async {
+                                                          profile.uid =
+                                                              value.user!.uid;
+                                                          await firebase.then(
+                                                              (value) async {
+                                                            await userCollection
+                                                                .add({
+                                                              "username":
+                                                                  profile
+                                                                      .username,
+                                                              "email":
+                                                                  profile.email,
+                                                            });
 
-                                                          print("uid = ${profile.uid}");
-                                                          Navigator.pushReplacement(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                            return LoginPage();
-                                                          }));
-                                                        });
+                                                            formKey
+                                                                .currentState!
+                                                                .reset();
+
+                                                            print(
+                                                                "uid = ${profile.uid}");
+                                                            Navigator.pushReplacement(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) {
+                                                              return LoginPage();
+                                                            }));
+                                                          });
                                                         });
                                                       } on FirebaseAuthException catch (e) {
                                                         print(e.code);

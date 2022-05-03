@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 import 'package:first_flutter/Feed.dart';
-import 'package:first_flutter/Profile.dart';
+import 'package:first_flutter/Model/Profile.dart';
 import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/services.dart';
@@ -80,23 +80,23 @@ class _LoginState extends State<LoginPage> {
                                           
                                           decoration: InputDecoration(
                                             enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
+                                                borderSide: const  BorderSide(
                                                     color: Color.fromRGBO(
                                                         184, 255, 249, 100)),
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         14.0)),
                                             focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Color.fromARGB(
+                                                borderSide: const BorderSide(
+                                                    color:  Color.fromARGB(
                                                         156, 0, 183, 255)),
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         14.0)),
-                                            fillColor: Color.fromRGBO(
+                                            fillColor: const Color.fromRGBO(
                                                 184, 255, 249, 100),
                                             filled: true,
-                                            prefixIcon: Icon((FontAwesomeIcons
+                                            prefixIcon: const Icon((FontAwesomeIcons
                                                 .solidCircleUser)),
                                             hintText: 'Username or Email',
                                             counterText: "",
@@ -113,14 +113,14 @@ class _LoginState extends State<LoginPage> {
                                           },
                                           decoration: InputDecoration(
                                               enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
+                                                  borderSide:  const BorderSide(
                                                       color: Color.fromRGBO(
                                                           184, 255, 249, 100)),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           14.0)),
                                               focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
+                                                  borderSide: const BorderSide(
                                                       color: Color.fromARGB(
                                                           156, 0, 183, 255)),
                                                   borderRadius:
@@ -132,17 +132,18 @@ class _LoginState extends State<LoginPage> {
                                               hintText: 'Password',
                                               counterText: "",
                                               prefixIcon:
-                                                  Icon((FontAwesomeIcons.lock)),
+                                                 const Icon((FontAwesomeIcons.lock)),
                                               suffixIcon: IconButton(
                                                 icon:
-                                                    Icon(FontAwesomeIcons.eye),
+                                                    const Icon(FontAwesomeIcons.eye),
                                                 onPressed: () {
                                                   setState(() {
                                                     _showPassword =
                                                         !_showPassword;
                                                   });
                                                 },
-                                              )),
+                                              )
+                                              ),
                                           maxLength: 20,
                                           obscureText: _showPassword,
                                         ),
