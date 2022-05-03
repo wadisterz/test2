@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-#Fri Apr 29 21:49:22 ICT 2022
-=======
-#Mon May 02 21:18:40 ICT 2022
->>>>>>> bank
+#Wed May 04 04:59:45 ICT 2022
 path.4=classes_1.dex
 path.3=classes_0.dex
 path.2=classes2.dex
