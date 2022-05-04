@@ -55,9 +55,27 @@ class _FeedState extends State<FeedPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
               appBar: AppBar(
-                title: Text("test"),
-              ),
+                //title: Text("test"),
                 backgroundColor:Color.fromRGBO(133, 244, 255, 1),
+                elevation: 0,
+                actions: [
+                  IconButton(onPressed: (){
+                  }, 
+                  icon: Icon((FontAwesomeIcons.bell)
+                  ),
+                  )
+                ],
+                leading:Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: IconButton(onPressed: (){
+
+                  },
+                 icon: Icon((FontAwesomeIcons.bars))
+                  ),
+                ) 
+                
+                
+              ),
 
             );
           }
