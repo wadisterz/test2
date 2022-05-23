@@ -16,6 +16,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'service/FeedBox.dart';
+
 class FeedPage extends StatefulWidget {
   const FeedPage({Key? key}) : super(key: key);
 
@@ -55,7 +56,7 @@ class _FeedState extends State<FeedPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
-        backgroundColor: Color.fromRGBO(133, 244, 255, 1),
+              backgroundColor: Color.fromRGBO(133, 244, 255, 1),
               appBar: AppBar(
                   //title: Text("test"),
                   backgroundColor: Color.fromRGBO(133, 244, 255, 1),
@@ -71,21 +72,15 @@ class _FeedState extends State<FeedPage> {
                     child: IconButton(
                         onPressed: () {}, icon: Icon((FontAwesomeIcons.bars))),
                   )),
+
+            body: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (BuildContext context, int index) {
+                return FeedBox("name ${index}", "title ${index}", "gps ${index}");
+            }),
                   
-                  body:
-                   Padding(padding: const EdgeInsets.all(8),
-                   
-                  child: 
-                  Column(
-                    children: [
-                      FeedBox("bank","ซื้อหมูหน้าเซเว่wwน")
-                    ],
-),
-                  ),
                   
-                
             );
-            
           }
           return Scaffold(
             body: Center(child: CircularProgressIndicator()),
