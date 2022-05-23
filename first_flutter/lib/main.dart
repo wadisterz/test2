@@ -1,9 +1,18 @@
+// ignore_for_file: deprecated_member_use
+
+import 'package:first_flutter/Feed.dart';
+import 'package:first_flutter/Login.dart';
+import 'package:first_flutter/Model/CustomAppbar.dart';
+import 'package:first_flutter/Register.dart';
 import 'package:flutter/material.dart';
-void main(){
+
+void main() {
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   @override
+<<<<<<< HEAD
 <<<<<<< HEAD
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,5 +38,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(home : Text('Hello'),);
 
 >>>>>>> origin/bank
+=======
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Deal_Demo',
+      home: FeedPage(),
+      theme: ThemeData(
+        primaryColor: Color.fromRGBO(133, 244, 255, 1),
+        backgroundColor: Color.fromRGBO(133, 244, 255, 1)
+      ),
+    );
+>>>>>>> 8624bc70bb99e0c9913e07b2a4b6997e46909517
   }
 }
