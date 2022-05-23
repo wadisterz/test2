@@ -1,7 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
-import 'package:first_flutter/Feed.dart';
+import 'package:first_flutter/Nav.dart';
 import 'package:first_flutter/Model/Profile.dart';
 import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
@@ -101,7 +101,7 @@ class _LoginState extends State<LoginPage> {
                                             hintText: 'Username or Email',
                                             counterText: "",
                                           ),
-                                          maxLength: 20,
+                                          maxLength: 50,
                                         ),
                                         SizedBox(height: 10),
                                         SizedBox(height: 10),
@@ -156,6 +156,7 @@ class _LoginState extends State<LoginPage> {
                                           children: [
                                             SizedBox(
                                               child: ElevatedButton(
+                                                
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                           primary:
@@ -175,7 +176,7 @@ class _LoginState extends State<LoginPage> {
                                                         .then((value) {
                                                             formKey.currentState!.reset();
                                                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                            return FeedPage();
+                                                            return NavPage();
                                                            }));
 
                                                         });
