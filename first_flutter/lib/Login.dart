@@ -1,8 +1,8 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
+import 'package:first_flutter/Model/UserModel.dart';
 import 'package:first_flutter/Nav.dart';
-import 'package:first_flutter/Model/Profile.dart';
 import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +35,7 @@ class _LoginState extends State<LoginPage> {
 
   final formKey = GlobalKey<FormState>();
 
-  Profile profile = Profile(uid: '' ,username: '', password: '', email: '');
+  UserModel profile = UserModel(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
   bool _showPassword = true;
   String? _Cpassword;
 
@@ -172,7 +172,7 @@ class _LoginState extends State<LoginPage> {
                                                       formKey.currentState!
                                                           .save();
                                                       try {
-                                                        await FirebaseAuth.instance.signInWithEmailAndPassword(email: profile.email, password: profile.password)
+                                                        await FirebaseAuth.instance.signInWithEmailAndPassword(email: profile.email!, password: profile.password!)
                                                         .then((value) {
                                                             formKey.currentState!.reset();
                                                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){

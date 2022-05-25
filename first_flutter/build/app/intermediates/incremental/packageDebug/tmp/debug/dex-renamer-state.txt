@@ -1,16 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-#Wed May 04 04:59:45 ICT 2022
-=======
-#Thu May 05 00:01:36 ICT 2022
->>>>>>> ae99312d2f03c319bd694ac724a9facc1a6090db
-=======
-#Tue May 24 02:36:08 ICT 2022
->>>>>>> e29f560895d70ebe3f7016fb1aab0cfcc152ec6e
-=======
-#Mon May 23 13:12:33 ICT 2022
->>>>>>> 5a6d1185f629e7d390c47c10aad652d4d98f69df
+#Wed May 25 08:38:05 ICT 2022
 path.4=classes_1.dex
 path.3=classes_0.dex
 path.2=classes2.dex
