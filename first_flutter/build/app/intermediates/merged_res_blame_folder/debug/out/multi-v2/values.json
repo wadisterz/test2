@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\waray\\Desktop\\New folder\\first_flutter\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "D:\\flutter2\\test2\\first_flutter\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\waray\\.gradle\\caches\\transforms-2\\files-2.1\\5cf36af8c665794dec2262fc6fa16b40\\coordinatorlayout-1.0.0\\res\\values\\values.xml",
@@ -20,6 +20,42 @@
                         "endLines": "2,158,194,283",
                         "endColumns": "60,12,24,24",
                         "endOffsets": "161,11407,13365,18576"
+                    }
+                },
+                {
+                    "source": "D:\\flutter2\\test2\\first_flutter\\build\\app\\generated\\res\\google-services\\debug\\values\\values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,199,340,422,526,635,755,850",
+                        "endColumns": "143,140,81,103,108,119,94,71",
+                        "endOffsets": "194,335,417,521,630,750,845,917"
+                    },
+                    "to": {
+                        "startLines": "126,127,128,129,130,131,132,133",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "8966,9110,9251,9333,9437,9546,9666,9761",
+                        "endColumns": "143,140,81,103,108,119,94,71",
+                        "endOffsets": "9105,9246,9328,9432,9541,9661,9756,9828"
+                    }
+                },
+                {
+                    "source": "D:\\flutter2\\test2\\first_flutter\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "176,821",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "472,987"
+                    },
+                    "to": {
+                        "startLines": "135,140",
+                        "startColumns": "4,4",
+                        "startOffsets": "9904,10201",
+                        "endLines": "139,142",
+                        "endColumns": "12,12",
+                        "endOffsets": "10196,10365"
                     }
                 },
                 {
@@ -56,25 +92,6 @@
                         "startOffsets": "6495,7673",
                         "endColumns": "67,166",
                         "endOffsets": "6558,7835"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\waray\\Desktop\\New folder\\first_flutter\\android\\app\\src\\main\\res\\values\\styles.xml",
-                    "from": {
-                        "startLines": "3,14",
-                        "startColumns": "4,4",
-                        "startOffsets": "176,821",
-                        "endLines": "7,16",
-                        "endColumns": "12,12",
-                        "endOffsets": "472,987"
-                    },
-                    "to": {
-                        "startLines": "135,140",
-                        "startColumns": "4,4",
-                        "startOffsets": "9904,10201",
-                        "endLines": "139,142",
-                        "endColumns": "12,12",
-                        "endOffsets": "10196,10365"
                     }
                 },
                 {
@@ -130,23 +147,6 @@
                         "endLines": "3,12,13,26,27,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,107,134,143,147,148,152,153,154,155,177,184,331,363,400,407",
                         "endColumns": "59,71,87,68,62,69,67,71,69,60,73,72,60,60,61,63,61,60,67,99,59,65,72,68,56,51,61,71,75,64,58,58,59,59,59,59,59,59,59,59,59,59,58,59,59,59,59,59,59,59,59,59,59,58,59,59,58,58,58,58,58,58,34,34,54,62,54,57,57,60,62,56,50,49,60,56,65,33,34,34,69,70,116,12,109,12,128,71,66,24,24,24,24,24,24",
                         "endOffsets": "221,629,717,1706,1769,1982,2050,2122,2192,2253,2327,2400,2461,2522,2584,2648,2710,2771,2839,2939,2999,3065,3138,3207,3264,3316,3378,3450,3526,3591,3650,3709,3769,3829,3889,3949,4009,4069,4129,4189,4249,4309,4368,4428,4488,4548,4608,4668,4728,4788,4848,4908,4968,5027,5087,5147,5206,5265,5324,5383,5442,5501,5596,5631,5686,5749,5804,5862,5920,5981,6044,6101,6152,6202,6263,6320,6386,6420,6455,6490,6628,9899,10482,10683,10793,10994,11123,11195,11262,12459,12757,21876,23941,25701,26078"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\waray\\Desktop\\New folder\\first_flutter\\build\\app\\generated\\res\\google-services\\debug\\values\\values.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,199,340,422,526,635,755,850",
-                        "endColumns": "143,140,81,103,108,119,94,71",
-                        "endOffsets": "194,335,417,521,630,750,845,917"
-                    },
-                    "to": {
-                        "startLines": "126,127,128,129,130,131,132,133",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "8966,9110,9251,9333,9437,9546,9666,9761",
-                        "endColumns": "143,140,81,103,108,119,94,71",
-                        "endOffsets": "9105,9246,9328,9432,9541,9661,9756,9828"
                     }
                 }
             ]

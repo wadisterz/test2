@@ -1,11 +1,12 @@
 import 'dart:ffi';
+import 'package:first_flutter/Menu.dart';
 import 'package:first_flutter/Message.dart';
+import 'package:first_flutter/Model/UserModel.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:ui';
 import 'package:first_flutter/Nav.dart';
 import 'package:first_flutter/Feeds.dart';
-import 'package:first_flutter/Model/Profile.dart';
 import 'package:first_flutter/Profile.dart';
 import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
@@ -31,29 +32,34 @@ class NavPage extends StatefulWidget {
 class _NavState extends State<NavPage> {
   Future getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-    });
+    setState(() {});
   }
 
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   final formKey = GlobalKey<FormState>();
-
-  Profile profile = Profile(uid: '', username: '', password: '', email: '');
+  UserModel profile = UserModel(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
   bool _showPassword = true;
   String? _Cpassword;
   int currentTap = 0;
-  final List<Widget> screens = [
-    FeedsPage(),
-    ProfilePage(),
-    MessagePage()
+  int currentAppbar = 0;
+  final List<Widget> appbarTap = [
+    MenuPage(),
   ];
+  void _onAppbarTap(int index) {
+    setState(() {
+      currentAppbar = index;
+    });
+  }
 
-void _onItemTap(int index ){
-  setState(() {
-    currentTap = index;
-  });
-}
+  final List<Widget> screens = [FeedsPage(), ProfilePage(), MessagePage()];
+
+  void _onItemTap(int index) {
+    setState(() {
+      currentTap = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -69,7 +75,6 @@ void _onItemTap(int index ){
           }
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
-              
               backgroundColor: Color.fromRGBO(133, 244, 255, 1),
               appBar: AppBar(
                   //title: Text("test"),
@@ -84,38 +89,41 @@ void _onItemTap(int index ){
                   leading: Padding(
                     padding: const EdgeInsets.all(0),
                     child: IconButton(
-                        onPressed: () {}, icon: Icon((FontAwesomeIcons.bars))),
+                        onPressed: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return MenuPage();
+                          }));
+                        },
+                        icon: Icon((FontAwesomeIcons.bars))),
                   )),
-                  body: Center(child: 
-                  screens.elementAt(currentTap)
-                  
-                  ),
+              body: Center(child: screens.elementAt(currentTap)),
               bottomNavigationBar: BottomNavigationBar(
                 showSelectedLabels: false,
                 showUnselectedLabels: false,
                 backgroundColor: Color.fromRGBO(66, 194, 255, 1),
-                items:  <BottomNavigationBarItem>[
+                items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                    icon: Icon((FontAwesomeIcons.home),color: currentTap ==0 ? Colors.white:Colors.black26),
-                    label:"Feed" 
-                  ),
+                      icon: Icon((FontAwesomeIcons.home),
+                          color:
+                              currentTap == 0 ? Colors.white : Colors.black26),
+                      label: "Feed"),
                   BottomNavigationBarItem(
-                    icon: Icon((FontAwesomeIcons.solidUser),color: currentTap ==1 ?Colors.white : Colors.black26,),
-                    label: "Profile"
-                    
-                  ),
+                      icon: Icon(
+                        (FontAwesomeIcons.solidUser),
+                        color: currentTap == 1 ? Colors.white : Colors.black26,
+                      ),
+                      label: "Profile"),
                   BottomNavigationBarItem(
-                    icon: Icon((FontAwesomeIcons.solidMessage),color: currentTap ==2 ? Colors.white: Colors.black26),
-                    label: "Chat"
-                  ),
+                      icon: Icon((FontAwesomeIcons.solidMessage),
+                          color:
+                              currentTap == 2 ? Colors.white : Colors.black26),
+                      label: "Chat"),
                 ],
-                currentIndex: currentTap ,
+                currentIndex: currentTap,
                 onTap: _onItemTap,
-
               ),
-              
             );
-            
           }
           return Scaffold(
             body: Center(child: CircularProgressIndicator()),

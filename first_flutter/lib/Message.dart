@@ -1,8 +1,8 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
+import 'package:first_flutter/Model/UserModel.dart';
 import 'package:first_flutter/Nav.dart';
-import 'package:first_flutter/Model/Profile.dart';
 import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/rendering.dart';
@@ -36,7 +36,7 @@ class _MessageState extends State<MessagePage> {
 
   final formKey = GlobalKey<FormState>();
 
-  Profile profile = Profile(uid: '', username: '', password: '', email: '');
+  UserModel profile = UserModel(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
   bool _showPassword = true;
   String? _Cpassword;
 
