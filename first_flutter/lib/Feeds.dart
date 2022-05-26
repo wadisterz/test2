@@ -146,7 +146,7 @@ class _FeedsState extends State<FeedsPage> {
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
-                      maxLines: 15,
+                      maxLines: 1,
                           validator: RequiredValidator(
                             errorText: "enter"
                           ),
