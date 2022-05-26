@@ -10,6 +10,7 @@ import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,6 +21,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'service/FeedBox.dart';
 import 'package:get/get.dart';
+import 'package:geolocator_android/geolocator_android.dart';
+
 
 class FeedsPage extends StatefulWidget {
   const FeedsPage({Key? key}) : super(key: key);
@@ -29,6 +32,43 @@ class FeedsPage extends StatefulWidget {
 }
 
 class _FeedsState extends State<FeedsPage> {
+  Position? _currentUserPosition;
+  double? distanceKM = 0.0;
+  
+  Future _getDistance()async{
+    bool serviceEnabled;
+    LocationPermission permission;
+
+serviceEnabled = await Geolocator.isLocationServiceEnabled();
+if (!serviceEnabled) {
+  return Future.error('Location services are disabled');
+}
+
+permission = await Geolocator.checkPermission();
+if (permission == LocationPermission.denied) {
+  permission = await Geolocator.requestPermission();
+  if (permission == LocationPermission.denied) {
+    return Future.error('Location permissions are denied');
+  }
+}
+
+if (permission == LocationPermission.deniedForever) {
+  return Future.error(
+      'Location permissions are permanently denied, we cannot request permissions.');
+}
+    _currentUserPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print(_currentUserPosition!.latitude);
+    print(_currentUserPosition!.longitude);
+    double storelat = 13.74815;
+    double storelong = 100.4786914;
+    distanceKM = await Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong);
+    print("distance = $distanceKM");
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   final auth = FirebaseAuth.instance;
   final String? uid = FirebaseAuth.instance.currentUser?.uid;
   final userRef = FirebaseFirestore.instance.collection('user');
@@ -44,6 +84,21 @@ class _FeedsState extends State<FeedsPage> {
       return string;
     }
   }
+  Stream<List<PostModel?>> readPost()=> FirebaseFirestore.instance.collection('post')
+  .snapshots()
+  .map((snapshot)=>snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
+  Stream<List<PostModel>> readPostz()=> FirebaseFirestore.instance.collection('post').snapshots().map((snapshot)=>
+  snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
+
+  Stream<QuerySnapshot> getfeed(BuildContext context) async*{
+    final fb = FirebaseFirestore.instance.collection('post').snapshots();
+  }
+  
+  Widget getFeed(PostModel? post) => ListTile(
+    title: Text("test")
+  );
+  
+  // --------------
   Future<UserModel?> readUserz()async{
     final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
     final snapshot = await docUser.get();
@@ -52,14 +107,6 @@ class _FeedsState extends State<FeedsPage> {
     }
   //if(snapshot.exists){
   //}
-  }
-  Widget buildUser(UserModel user)  {
-    if(user.username == null){
-      return Text((user.username!));
-    }
-    else{
-      return Text((user.username!));
-    }
   }
     CollectionReference docPost= FirebaseFirestore.instance.collection('post');
   Widget BuildUser(UserModel user){
@@ -123,7 +170,7 @@ class _FeedsState extends State<FeedsPage> {
                                ? Center(child: Text("NoUsers"))
                                :BuildUser(user);
                              }else{
-                           return Text(uid.toString(),
+                           return Text("",
                              style: TextStyle(
                                  fontSize: 20,
                                  color: Colors.white,
@@ -140,7 +187,7 @@ class _FeedsState extends State<FeedsPage> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: "",
-                      prefixIcon: Icon(FontAwesomeIcons.mapLocation ,color: Colors.white,)
+                      prefixIcon: Icon(Icons.location_on ,color: Colors.white,)
                       ),
                       style: TextStyle(
                           fontSize: 20,
@@ -257,6 +304,8 @@ class _FeedsState extends State<FeedsPage> {
 
   @override
   Widget build(BuildContext context) {
+    
+    _getDistance();
     profile.uid = uid;
     return FutureBuilder(
         future: firebase,
@@ -272,18 +321,30 @@ class _FeedsState extends State<FeedsPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
               backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-              body: ListView.builder(
-                itemCount: 15,
-                itemBuilder: (BuildContext context, int i) {
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      FeedBox("name ${i}", "title ${i}", "gps ${i}")
-                    ],
+              body: StreamBuilder<List<PostModel?>>(
+                stream: readPostz(),
+                builder: (context, snapshot) {
+                  if(snapshot.hasError){
+                    print(snapshot);
+                    return Text("error ${snapshot.error}");
+                  }else if(snapshot.hasData){
+                    final posts = snapshot.data!;
+                    return ListView(children: posts.map(getFeed).toList(),);
+                  }
+                   return ListView.builder(
+                    itemCount: 15,
+                    itemBuilder: (BuildContext context, int i) {
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                            FeedBox(postmodel.postby,postmodel.heading,postmodel.location)
+                        ],
+                      );
+                    },
                   );
-                },
+                }
               ),
               floatingActionButton: FloatingActionButton(
                 child: Icon(
@@ -302,4 +363,5 @@ class _FeedsState extends State<FeedsPage> {
           );
         });
   }
+  
 }

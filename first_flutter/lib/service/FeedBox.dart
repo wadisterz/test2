@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 //                              fontWeight: FontWeight.bold)),
 //                              SizedBox(height: 1,)
 class FeedBox extends StatelessWidget {
-  String title = "title";
-  String name = "name";
-  String gps = "gps";
+  String? title = "title";
+  String? name = "name";
+  String? gps = "gps";
   FeedBox(this.name, this.title,this.gps);
 
   @override
@@ -46,7 +46,7 @@ class FeedBox extends StatelessWidget {
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             
-                      Text(name,
+                      Text(name!,
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -55,7 +55,7 @@ class FeedBox extends StatelessWidget {
                               maxLines: 1,
                               ),
                               Spacer(),
-                      Text(title,
+                      Text(title!,
                           style: TextStyle(
                               fontSize: 30,
                               color: Colors.white,
@@ -64,7 +64,7 @@ class FeedBox extends StatelessWidget {
                               maxLines: 1,
                               ),
                               Spacer(),
-                      Text(gps,
+                      Text(gps!,
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.white,
