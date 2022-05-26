@@ -1,8 +1,10 @@
+import 'dart:developer';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 import 'package:first_flutter/Model/PostModel.dart';
 import 'package:first_flutter/Model/UserModel.dart';
+import 'package:first_flutter/Model/posttest.dart';
 import 'package:first_flutter/Profile.dart';
 import 'package:first_flutter/service/AddPostButton.dart';
 import 'package:first_flutter/Nav.dart';
@@ -32,9 +34,16 @@ class FeedsPage extends StatefulWidget {
 }
 
 class _FeedsState extends State<FeedsPage> {
+
+  @override
+  void initState(){
+    super.initState();
+    readtest();
+  }
   Position? _currentUserPosition;
   double? distanceKM = 0.0;
-  
+
+  List<Widget> widgets = [];
   Future _getDistance()async{
     bool serviceEnabled;
     LocationPermission permission;
@@ -64,11 +73,6 @@ if (permission == LocationPermission.deniedForever) {
     distanceKM = await Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong);
     print("distance = $distanceKM");
   }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
   final auth = FirebaseAuth.instance;
   final String? uid = FirebaseAuth.instance.currentUser?.uid;
   final userRef = FirebaseFirestore.instance.collection('user');
@@ -84,6 +88,29 @@ if (permission == LocationPermission.deniedForever) {
       return string;
     }
   }
+
+  Future<Null> readtest() async{
+    await Firebase.initializeApp().then((value) async {
+      print("data initialize");
+      await FirebaseFirestore.instance.collection('post').snapshots().listen((event) {
+        for(var snapshots in event.docs){
+          print('inloop = ');
+          Map<String, dynamic> map = snapshots.data();
+          print('map = $map');
+          posttest modelpost = posttest.fromMap(map);
+          setState(() {
+            widgets.add(createWidget(modelpost));
+          });
+        }
+
+      });
+
+    });
+  }
+  Widget createWidget(posttest model)=> 
+     FeedBox(model.postby,model.heading,model.location);
+    
+
   Stream<List<PostModel?>> readPost()=> FirebaseFirestore.instance.collection('post')
   .snapshots()
   .map((snapshot)=>snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
@@ -94,9 +121,6 @@ if (permission == LocationPermission.deniedForever) {
     final fb = FirebaseFirestore.instance.collection('post').snapshots();
   }
   
-  Widget getFeed(PostModel? post) => ListTile(
-    title: Text("test")
-  );
   
   // --------------
   Future<UserModel?> readUserz()async{
@@ -321,31 +345,7 @@ if (permission == LocationPermission.deniedForever) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
               backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-              body: StreamBuilder<List<PostModel?>>(
-                stream: readPostz(),
-                builder: (context, snapshot) {
-                  if(snapshot.hasError){
-                    print(snapshot);
-                    return Text("error ${snapshot.error}");
-                  }else if(snapshot.hasData){
-                    final posts = snapshot.data!;
-                    return ListView(children: posts.map(getFeed).toList(),);
-                  }
-                   return ListView.builder(
-                    itemCount: 15,
-                    itemBuilder: (BuildContext context, int i) {
-                      return Column(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                            FeedBox(postmodel.postby,postmodel.heading,postmodel.location)
-                        ],
-                      );
-                    },
-                  );
-                }
-              ),
+              body: widgets ==0 ? Center(child: CircularProgressIndicator(),): Center(child: Column(children: widgets,)),
               floatingActionButton: FloatingActionButton(
                 child: Icon(
                   Icons.add,
@@ -363,5 +363,4 @@ if (permission == LocationPermission.deniedForever) {
           );
         });
   }
-  
 }
