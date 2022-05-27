@@ -13,6 +13,7 @@ import 'package:first_flutter/main.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,10 +37,10 @@ class FeedsPage extends StatefulWidget {
 class _FeedsState extends State<FeedsPage> {
 
   @override
-  void initState(){
-    super.initState();
-    readtest();
-  }
+   void initState(){
+     super.initState();
+     readtest();
+   }
   Position? _currentUserPosition;
   double? distanceKM = 0.0;
 
@@ -88,27 +89,35 @@ if (permission == LocationPermission.deniedForever) {
       return string;
     }
   }
-
+    int i = 0;
+    bool refresh = true;
   Future<Null> readtest() async{
     await Firebase.initializeApp().then((value) async {
       print("data initialize");
       await FirebaseFirestore.instance.collection('post').snapshots().listen((event) {
         for(var snapshots in event.docs){
-          print('inloop = ');
+          print('inloop = ${i}');
           Map<String, dynamic> map = snapshots.data();
           print('map = $map');
           posttest modelpost = posttest.fromMap(map);
           setState(() {
             widgets.add(createWidget(modelpost));
           });
+          print("widgets lengtt = ${widgets.length}");
+          i++;
         }
-
+        refresh = false;
       });
-
     });
   }
+  
   Widget createWidget(posttest model)=> 
-     FeedBox(model.postby,model.heading,model.location);
+     Column(
+       children: [
+         FeedBox(model.postby,model.heading,model.location),
+       ],
+     );
+     
     
 
   Stream<List<PostModel?>> readPost()=> FirebaseFirestore.instance.collection('post')
@@ -117,9 +126,6 @@ if (permission == LocationPermission.deniedForever) {
   Stream<List<PostModel>> readPostz()=> FirebaseFirestore.instance.collection('post').snapshots().map((snapshot)=>
   snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
 
-  Stream<QuerySnapshot> getfeed(BuildContext context) async*{
-    final fb = FirebaseFirestore.instance.collection('post').snapshots();
-  }
   
   
   // --------------
@@ -163,7 +169,8 @@ if (permission == LocationPermission.deniedForever) {
 
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
   Future<void> setPost(BuildContext context) async {
-                                                            print( "uid in Feed = ${profile.uid}");
+    print("insetpost");
+  print( "uid in Feed = ${profile.uid}");
     return await showDialog(
         context: context,
         builder: (context) {
@@ -281,14 +288,14 @@ if (permission == LocationPermission.deniedForever) {
                         minimumSize: Size(150, 50)
                     ) ,
                     onPressed: () async {
-                      print("pid = ${postmodel.pid}");
-                      print("uid = ${postmodel.uid}");
-                      print("postby = ${postmodel.postby}");
-                      print("heading = ${postmodel.heading}");
-                      print("location = ${postmodel.location}");
-                      print("status = ${postmodel.status}");
-                      print("text = ${postmodel.text}");
-                      print("profuleUrl = ${postmodel.text}");
+                      // print("pid = ${postmodel.pid}");
+                      // print("uid = ${postmodel.uid}");
+                      // print("postby = ${postmodel.postby}");
+                      // print("heading = ${postmodel.heading}");
+                      // print("location = ${postmodel.location}");
+                      // print("status = ${postmodel.status}");
+                      // print("text = ${postmodel.text}");
+                      // print("profuleUrl = ${postmodel.text}");
                         formKey.currentState?.save();
                       Navigator.of(context).pop();
                       postmodel.pid = auth.currentUser?.uid;
@@ -325,10 +332,9 @@ if (permission == LocationPermission.deniedForever) {
       currentTap = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
-    
+    print("infeedpage");
     _getDistance();
     profile.uid = uid;
     return FutureBuilder(
@@ -343,21 +349,30 @@ if (permission == LocationPermission.deniedForever) {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            return Scaffold(
-              backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-              body: widgets ==0 ? Center(child: CircularProgressIndicator(),): Center(child: Column(children: widgets,)),
-              floatingActionButton: FloatingActionButton(
-                child: Icon(
-                  Icons.add,
-                  size: 40,
-                ),
-                backgroundColor: Color.fromRGBO(66, 194, 255, 1),
-                onPressed: () async {
-                  setPost(context);
-                },
-              ),
-            );
-          }
+                    return StreamBuilder<Object>(
+                      stream: null,
+                      builder: (context, snapshot) {
+                        return Scaffold(
+                          backgroundColor: Color.fromRGBO(133, 244, 255, 1),
+                          body: widgets == 0 ? Center(child: CircularProgressIndicator(),):RefreshIndicator
+                          (
+                            onRefresh: readtest,
+                            child: ListView(children:  widgets,)
+                            ),
+                          floatingActionButton: FloatingActionButton(
+                            child: Icon(
+                              Icons.add,
+                              size: 40,
+                            ),
+                            backgroundColor: Color.fromRGBO(66, 194, 255, 1),
+                            onPressed: () async {
+                              setPost(context);
+                            },
+                          ),
+                        );
+                      }
+                    );
+                  }
           return Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
