@@ -10,14 +10,28 @@ class FeedBox extends StatelessWidget {
   String? title = "title";
   String? name = "name";
   String? gps = "gps";
-  FeedBox(this.name, this.title, this.gps);
+  bool status = false;
+  FeedBox(this.name, this.title, this.gps,this.status);
+  Colorchange(bool status){
+    if(status == true){
+          setState(){
+            Color.fromARGB(255, 95, 95, 95);
+          }
+    }
+    else{
+          setState(){
+            Color.fromRGBO(66, 194, 255, 1);
+          }
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-          color: Color.fromRGBO(66, 194, 255, 1),
+          color: Colorchange(status),
           borderRadius: BorderRadius.circular(35),
           boxShadow: [
             BoxShadow(
@@ -72,50 +86,6 @@ class FeedBox extends StatelessWidget {
               ),
             ],
           )),
-//        Container(
-//          child: Column(
-//            crossAxisAlignment: CrossAxisAlignment.start,
-//            children: <Widget>[
-//            Padding(
-//              padding: const EdgeInsets.only(left: 8.0),
-//              child: Container(
-//                alignment: Alignment.center,
-//                color: Colors.greenAccent,
-//                child:
-//                    Row(
-//                      children: [
-//                        Text(name,
-//                            style: TextStyle(
-//                                fontSize: 20,
-//                                color: Colors.white,
-//                                fontWeight: FontWeight.bold)
-//                                ),
-//                      ],
-//                    ),
-//
-//              ),
-//            ),
-//            Padding(
-//              padding: const EdgeInsets.only(left: 8.0),
-//              child: Container(
-//                child: Row(
-//
-//                  children: [
-//                        Text(title,
-//                            style: TextStyle(
-//                                fontSize: 30,
-//                                color: Colors.white,
-//                                fontWeight: FontWeight.bold),
-//                                maxLines: 1,
-//                                overflow: TextOverflow.ellipsis,
-//                                ),
-//
-//                ]),
-//              ),
-//            )
-//          ]
-//          ),
-//        ),
         ]),
       ),
     );

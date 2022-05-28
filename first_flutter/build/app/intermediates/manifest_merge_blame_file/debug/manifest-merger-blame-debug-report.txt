@@ -12,17 +12,17 @@
 12         to allow setting breakpoints, to provide hot reload, etc.
 13    -->
 14    <uses-permission android:name="android.permission.INTERNET" />
-14-->D:\flutter2\test2\first_flutter\android\app\src\debug\AndroidManifest.xml:6:5-66
-14-->D:\flutter2\test2\first_flutter\android\app\src\debug\AndroidManifest.xml:6:22-64
+14-->C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\debug\AndroidManifest.xml:6:5-66
+14-->C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\debug\AndroidManifest.xml:6:22-64
 15    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-15-->D:\flutter2\test2\first_flutter\android\app\src\main\AndroidManifest.xml:3:5-78
-15-->D:\flutter2\test2\first_flutter\android\app\src\main\AndroidManifest.xml:3:22-76
+15-->C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:3:5-78
+15-->C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:3:22-76
 16    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-16-->D:\flutter2\test2\first_flutter\android\app\src\main\AndroidManifest.xml:4:5-80
-16-->D:\flutter2\test2\first_flutter\android\app\src\main\AndroidManifest.xml:4:22-78
+16-->C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:4:5-80
+16-->C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:4:22-78
 17    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-17-->[:geolocator_android] D:\flutter2\test2\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-77
-17-->[:geolocator_android] D:\flutter2\test2\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-74
+17-->[:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-77
+17-->[:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-74
 18    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 18-->[com.google.firebase:firebase-auth:21.0.3] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\0cd31a8007b82ec10dce55ca37be1d81\jetified-firebase-auth-21.0.3\AndroidManifest.xml:24:5-79
 18-->[com.google.firebase:firebase-auth:21.0.3] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\0cd31a8007b82ec10dce55ca37be1d81\jetified-firebase-auth-21.0.3\AndroidManifest.xml:24:22-76
@@ -70,37 +70,37 @@
 59            android:value="2" />
 60
 61        <service
-61-->[:firebase_auth] D:\flutter2\test2\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-12:19
+61-->[:firebase_auth] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-12:19
 62            android:name="com.google.firebase.components.ComponentDiscoveryService"
-62-->[:firebase_auth] D:\flutter2\test2\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:8:18-89
+62-->[:firebase_auth] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:8:18-89
 63            android:directBootAware="true"
 63-->[com.google.firebase:firebase-common:20.1.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b25e52f5739b5665d39d607baa2467f6\jetified-firebase-common-20.1.0\AndroidManifest.xml:35:13-43
 64            android:exported="false" >
 64-->[com.google.firebase:firebase-auth:21.0.3] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\0cd31a8007b82ec10dce55ca37be1d81\jetified-firebase-auth-21.0.3\AndroidManifest.xml:66:13-37
 65            <meta-data
-65-->[:firebase_auth] D:\flutter2\test2\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+65-->[:firebase_auth] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
 66                android:name="com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar"
-66-->[:firebase_auth] D:\flutter2\test2\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-124
+66-->[:firebase_auth] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-124
 67                android:value="com.google.firebase.components.ComponentRegistrar" />
-67-->[:firebase_auth] D:\flutter2\test2\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+67-->[:firebase_auth] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
 68            <meta-data
-68-->[:firebase_storage] D:\flutter2\test2\first_flutter\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+68-->[:firebase_storage] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
 69                android:name="com.google.firebase.components:io.flutter.plugins.firebase.storage.FlutterFirebaseAppRegistrar"
-69-->[:firebase_storage] D:\flutter2\test2\first_flutter\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-126
+69-->[:firebase_storage] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-126
 70                android:value="com.google.firebase.components.ComponentRegistrar" />
-70-->[:firebase_storage] D:\flutter2\test2\first_flutter\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+70-->[:firebase_storage] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
 71            <meta-data
-71-->[:cloud_firestore] D:\flutter2\test2\first_flutter\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+71-->[:cloud_firestore] C:\Users\waray\Desktop\New folder\first_flutter\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
 72                android:name="com.google.firebase.components:io.flutter.plugins.firebase.firestore.FlutterFirebaseFirestoreRegistrar"
-72-->[:cloud_firestore] D:\flutter2\test2\first_flutter\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-134
+72-->[:cloud_firestore] C:\Users\waray\Desktop\New folder\first_flutter\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-134
 73                android:value="com.google.firebase.components.ComponentRegistrar" />
-73-->[:cloud_firestore] D:\flutter2\test2\first_flutter\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+73-->[:cloud_firestore] C:\Users\waray\Desktop\New folder\first_flutter\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
 74            <meta-data
-74-->[:firebase_core] D:\flutter2\test2\first_flutter\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
+74-->[:firebase_core] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-11:85
 75                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
-75-->[:firebase_core] D:\flutter2\test2\first_flutter\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-124
+75-->[:firebase_core] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:10:17-124
 76                android:value="com.google.firebase.components.ComponentRegistrar" />
-76-->[:firebase_core] D:\flutter2\test2\first_flutter\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
+76-->[:firebase_core] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:11:17-82
 77            <meta-data
 77-->[com.google.firebase:firebase-auth:21.0.3] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\0cd31a8007b82ec10dce55ca37be1d81\jetified-firebase-auth-21.0.3\AndroidManifest.xml:67:13-69:85
 78                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
@@ -122,33 +122,33 @@
 86        </service>
 87
 88        <provider
-88-->[:image_picker_android] D:\flutter2\test2\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-16:20
+88-->[:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:8:9-16:20
 89            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
-89-->[:image_picker_android] D:\flutter2\test2\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-82
+89-->[:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:13-82
 90            android:authorities="com.example.first_flutter.flutter.image_provider"
-90-->[:image_picker_android] D:\flutter2\test2\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-74
+90-->[:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:10:13-74
 91            android:exported="false"
-91-->[:image_picker_android] D:\flutter2\test2\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-37
+91-->[:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-37
 92            android:grantUriPermissions="true" >
-92-->[:image_picker_android] D:\flutter2\test2\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-47
+92-->[:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-47
 93            <meta-data
-93-->[:image_picker_android] D:\flutter2\test2\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-15:75
+93-->[:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-15:75
 94                android:name="android.support.FILE_PROVIDER_PATHS"
-94-->[:image_picker_android] D:\flutter2\test2\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:14:17-67
+94-->[:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:14:17-67
 95                android:resource="@xml/flutter_image_picker_file_paths" />
-95-->[:image_picker_android] D:\flutter2\test2\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:15:17-72
+95-->[:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:15:17-72
 96        </provider>
 97
 98        <service
-98-->[:geolocator_android] D:\flutter2\test2\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:10:9-14:56
+98-->[:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:10:9-14:56
 99            android:name="com.baseflow.geolocator.GeolocatorLocationService"
-99-->[:geolocator_android] D:\flutter2\test2\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-77
+99-->[:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-77
 100            android:enabled="true"
-100-->[:geolocator_android] D:\flutter2\test2\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-35
+100-->[:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-35
 101            android:exported="false"
-101-->[:geolocator_android] D:\flutter2\test2\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-37
+101-->[:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-37
 102            android:foregroundServiceType="location" />
-102-->[:geolocator_android] D:\flutter2\test2\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-53
+102-->[:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-53
 103
 104        <uses-library
 104-->[androidx.window:window:1.0.0-beta04] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\cea45e25bbe77c9713c39e234ccfd7bd\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40

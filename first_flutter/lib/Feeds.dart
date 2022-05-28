@@ -95,27 +95,39 @@ if (permission == LocationPermission.deniedForever) {
     await Firebase.initializeApp().then((value) async {
       print("data initialize");
       await FirebaseFirestore.instance.collection('post').snapshots().listen((event) {
+        if(refresh == true){
         for(var snapshots in event.docs){
           print('inloop = ${i}');
           Map<String, dynamic> map = snapshots.data();
           print('map = $map');
           posttest modelpost = posttest.fromMap(map);
           setState(() {
-            widgets.add(createWidget(modelpost));
+            widgets.add(createWidget(modelpost,i));
           });
           print("widgets lengtt = ${widgets.length}");
           i++;
-        }
+          }
         refresh = false;
+        }
       });
     });
   }
   
-  Widget createWidget(posttest model)=> 
-     Column(
-       children: [
-         FeedBox(model.postby,model.heading,model.location),
-       ],
+  Widget createWidget(posttest model, int i)=> 
+     GestureDetector(
+       onTap: (){
+         print("objecct${i}");
+         print("click post ${model.pid}");
+
+       },
+       child: Container(
+         height: 160,
+         child: Column(
+           children: [
+              FeedBox(model.postby,model.heading,model.location,true),
+           ],
+         ),
+       ),
      );
      
     
@@ -165,6 +177,153 @@ if (permission == LocationPermission.deniedForever) {
   }
   PostModel postmodel = PostModel(pid: "", uid: "", postby: "", heading: "", location: "", status: false, text: "", profileUrl: "");
 
+  Future<void> ClickPost(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          final TextEditingController _con = TextEditingController();
+          return 
+          //Expanded(
+             AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              backgroundColor: Color.fromRGBO(47, 161, 215, 1),
+              content: SingleChildScrollView(
+                child: Form(
+                  key: formKey,
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    CircleAvatar(
+                      radius: 35,
+                      backgroundImage: NetworkImage(
+                          "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  "),
+                    ),
+                    
+                         FutureBuilder<UserModel?>(
+                           future: readUserz(),
+                           builder: (context, snapshot) {
+                             if(snapshot.hasData){
+                               final user = snapshot.data!;
+                               print("hasdata");
+                               print(user);
+                               return user == null 
+                               ? Center(child: Text("NoUsers"))
+                               :BuildUser(user);
+                             }else{
+                           return Text("",
+                             style: TextStyle(
+                                 fontSize: 20,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                             overflow: TextOverflow.ellipsis,
+                             maxLines: 1,
+                           );
+                             }
+                         }
+                         ),
+                    Divider(
+                      color: Colors.white,
+                      thickness: 0.4,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(hintText: "",
+                      prefixIcon: Icon(Icons.location_on ,color: Colors.white,)
+                      ),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                          validator: RequiredValidator(
+                            errorText: "enter"
+                          ),
+                      onSaved: (String? location ){
+                        postmodel.location = location!;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _con,
+                      decoration: InputDecoration(hintText: "heading",
+                      ),
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      maxLength: 18,
+                          validator: RequiredValidator(
+                            errorText: "enter"
+                          ),
+                          onSaved: (String? heading){
+                            postmodel.heading = heading!;
+                          },
+                    ),
+                    SizedBox(height: 1,),
+                    TextFormField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 5,
+                      decoration: InputDecoration(hintText: "More information",
+                      //border: InputBorder.none,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+                      
+                      ),
+                      
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                          validator: RequiredValidator(
+                            errorText: "enter"
+                          ),
+                          onSaved: (String? text){
+                            postmodel.text = text!;
+                          },
+                          
+                    ),
+                    Divider(color: Colors.white,
+                    thickness: 0.2,),
+                  ]),
+                 
+                ),
+              ),
+              actions: <Widget>[
+                Center(
+                  child: ElevatedButton(
+                    child: Text("test2"),
+                    style: ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(11, 119, 170, 1),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                        padding: EdgeInsets.all(10),
+                        minimumSize: Size(150, 50)
+                    ) ,
+                    onPressed: () async {
+                      // print("pid = ${postmodel.pid}");
+                      // print("uid = ${postmodel.uid}");
+                      // print("postby = ${postmodel.postby}");
+                      // print("heading = ${postmodel.heading}");
+                      // print("location = ${postmodel.location}");
+                      // print("status = ${postmodel.status}");
+                      // print("text = ${postmodel.text}");
+                      // print("profuleUrl = ${postmodel.text}");
+                        formKey.currentState?.save();
+                      Navigator.of(context).pop();
+                      postmodel.uid = auth.currentUser?.uid;
+                      await docPost.add({
+                        "pid": postmodel.pid,
+                        "uid": postmodel.uid,
+                        "postby": postmodel.postby,
+                        "heading": postmodel.heading,
+                        "location": postmodel.location,
+                        "status": postmodel.status,
+                        "text":  postmodel.text,
+                        "profileUrl": postmodel.profileUrl
+                      });
+                    },
+                  ),
+                )
+              ],
+            );
+         // );
+        });
+  }
   
 
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
@@ -332,6 +491,7 @@ if (permission == LocationPermission.deniedForever) {
       currentTap = index;
     });
   }
+  
   @override
   Widget build(BuildContext context) {
     print("infeedpage");
@@ -357,7 +517,10 @@ if (permission == LocationPermission.deniedForever) {
                           body: widgets == 0 ? Center(child: CircularProgressIndicator(),):RefreshIndicator
                           (
                             onRefresh: readtest,
-                            child: ListView(children:  widgets,)
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
+                              children: widgets
+                              )
                             ),
                           floatingActionButton: FloatingActionButton(
                             child: Icon(

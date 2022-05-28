@@ -67,7 +67,6 @@ class _MenuState extends State<MenuPage> {
          }
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
-              
               backgroundColor: Color.fromRGBO(133, 244, 255, 1),
               appBar: AppBar(
                   //title: Text("test"),
@@ -84,9 +83,19 @@ class _MenuState extends State<MenuPage> {
                     child: IconButton(
                         onPressed: () {}, icon: Icon((FontAwesomeIcons.bars))),
                   )),
+                  body: Row(children: [
+                    Center(
+                      child: Container(
+                        decoration:BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10)),
+                          width: 150,
+                          height: 100,
+                      ),
+                    )
+                    
+                  ]),
                   );
-                  
-                  
           }
           return Scaffold(
             body: Center(child: CircularProgressIndicator()),
