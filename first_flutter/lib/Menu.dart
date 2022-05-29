@@ -32,22 +32,29 @@ class _MenuState extends State<MenuPage> {
   final formKey = GlobalKey<FormState>();
 
   final auth = FirebaseAuth.instance;
-  UserModel profile = UserModel(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
+  UserModel profile = UserModel(
+      uid: '',
+      username: '',
+      password: '',
+      email: '',
+      profileUrl: '',
+      bio: '',
+      rate: 0,
+      succeedcount: 0);
   bool _showPassword = true;
   String? _Cpassword;
   int currentTap = 0;
   final userRef = FirebaseFirestore.instance.collection('user');
-  getUserbyId(){
+  getUserbyId() {
     final String id = getuser(auth.currentUser?.uid);
-    userRef.doc(id).get().then((DocumentSnapshot doc){
-    } );
+    userRef.doc(id).get().then((DocumentSnapshot doc) {});
   }
+
   final List<Widget> screens = [ProfilePage()];
-  String getuser (String? string){
-    if(string == null){
+  String getuser(String? string) {
+    if (string == null) {
       return 'null';
-    }
-    else {
+    } else {
       return string;
     }
   }
@@ -64,10 +71,9 @@ class _MenuState extends State<MenuPage> {
               ),
               body: Center(child: Text("${snapshot.error}")),
             );
-         }
+          }
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
-              
               backgroundColor: Color.fromRGBO(133, 244, 255, 1),
               appBar: AppBar(
                   //title: Text("test"),
@@ -82,11 +88,95 @@ class _MenuState extends State<MenuPage> {
                   leading: Padding(
                     padding: const EdgeInsets.all(0),
                     child: IconButton(
-                        onPressed: () {}, icon: Icon((FontAwesomeIcons.bars))),
+                        onPressed: (
+                          
+                        ) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                            return NavPage();
+                          }));
+                        }, icon: Icon((FontAwesomeIcons.arrowLeft))),
                   )),
-                  );
-                  
-                  
+              body: 
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(66, 194, 255, 1),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      spreadRadius: 1,
+                                      blurRadius: 4,
+                                      offset: Offset(0.0, 3.0))
+                                ]),
+                            width: 120,
+                            height: 100,
+                            child: Image.asset(
+                              'images/profileicon.png',
+                              height: 72,
+                              width: 72,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(66, 194, 255, 1),
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      spreadRadius: 1,
+                                      blurRadius: 4,
+                                      offset: Offset(0.0, 3.0))
+                                ]),
+                            width: 120,
+                            height: 100,
+                            child: Image.asset(
+                              'images/dealicon.png',
+                              height: 72,
+                              width: 72,
+                            ),
+                          ),
+                        ),
+                      ]),
+                      SizedBox(height:450),
+                  Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Container(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(255, 123, 171, 1),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 4,
+                                offset: Offset(0.0, 3.0))
+                          ]),
+                      width: 350,
+                      height: 80,
+                      child: Center(
+                        child: Text(
+                          'LOGOUT',
+                          style: TextStyle(
+                              fontSize: 35,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
           }
           return Scaffold(
             body: Center(child: CircularProgressIndicator()),

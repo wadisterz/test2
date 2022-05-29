@@ -31,6 +31,7 @@ class _ProfileState extends State<ProfilePage> {
       _image = File(image!.path);
     });
   }
+  
 
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 

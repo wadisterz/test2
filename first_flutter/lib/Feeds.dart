@@ -1,8 +1,11 @@
+import 'dart:developer';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:first_flutter/Model/PostModel.dart';
 import 'package:first_flutter/Model/UserModel.dart';
+import 'package:first_flutter/Model/posttest.dart';
 import 'package:first_flutter/Profile.dart';
 import 'package:first_flutter/service/AddPostButton.dart';
 import 'package:first_flutter/Nav.dart';
@@ -10,6 +13,8 @@ import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,6 +33,45 @@ class FeedsPage extends StatefulWidget {
 }
 
 class _FeedsState extends State<FeedsPage> {
+
+  @override
+   void initState(){
+     super.initState();
+     readtest();
+   }
+  Position? _currentUserPosition;
+  double? distanceKM = 0.0;
+
+  List<Widget> widgets = [];
+  Future _getDistance()async{
+    bool serviceEnabled;
+    LocationPermission permission;
+
+serviceEnabled = await Geolocator.isLocationServiceEnabled();
+if (!serviceEnabled) {
+  return Future.error('Location services are disabled');
+}
+
+permission = await Geolocator.checkPermission();
+if (permission == LocationPermission.denied) {
+  permission = await Geolocator.requestPermission();
+  if (permission == LocationPermission.denied) {
+    return Future.error('Location permissions are denied');
+  }
+}
+
+if (permission == LocationPermission.deniedForever) {
+  return Future.error(
+      'Location permissions are permanently denied, we cannot request permissions.');
+}
+    _currentUserPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print(_currentUserPosition!.latitude);
+    print(_currentUserPosition!.longitude);
+    double storelat = 13.74815;
+    double storelong = 100.4786914;
+    distanceKM = await Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong);
+    print("distance = $distanceKM");
+  }
   final auth = FirebaseAuth.instance;
   final String? uid = FirebaseAuth.instance.currentUser?.uid;
   final userRef = FirebaseFirestore.instance.collection('user');
@@ -43,6 +87,153 @@ class _FeedsState extends State<FeedsPage> {
       return string;
     }
   }
+    int i = 0;
+    bool refresh = true;
+  Future<Null> readtest() async{
+    await Firebase.initializeApp().then((value) async {
+      print("data initialize");
+      await FirebaseFirestore.instance.collection('post').orderBy('status',descending: false).snapshots().listen((event) {
+        if(refresh == true){
+        for(var snapshots in event.docs){
+          print('inloop = ${i}');
+          Map<String, dynamic> map = snapshots.data();
+          print('map = $map');
+          posttest modelpost = posttest.fromMap(map);
+          setState(() {
+            widgets.add(createWidget(modelpost,i));
+          });
+          print("widgets lengtt = ${widgets.length}");
+          i++;
+          }
+        refresh = false;
+        }
+      });
+    });
+  }
+  
+  Widget createWidget(posttest model, int i)=> 
+     GestureDetector(
+       onTap: (){
+         showDialog(context: context, builder: (BuildContext context){
+           return AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+         backgroundColor: Color.fromRGBO(47, 161, 215, 1),
+         content: SingleChildScrollView(
+           child: Column(mainAxisSize:MainAxisSize.min,
+           children: [
+             CircleAvatar(
+               radius: 35,
+              backgroundImage: NetworkImage(
+               "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  ")
+             ),
+             Column(
+               children: [
+                 Text(model.postby,
+                 style: TextStyle(
+                                 fontSize: 20,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                             overflow: TextOverflow.ellipsis,
+                             maxLines: 1,
+                           ),
+                Divider(
+                      color: Colors.white,
+                      thickness: 0.4,
+                ),
+                 Text(model.heading,
+                 style: TextStyle(
+                                 fontSize: 25,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                             overflow: TextOverflow.ellipsis,
+                             maxLines: 1,
+                           ),
+                 Wrap(
+                   children: [
+                    Icon(Icons.location_on,
+                    color: Colors.white,),
+                    Text(model.location,
+                   style: TextStyle(
+                                   fontSize: 25,
+                                   color: Colors.white,
+                                   fontWeight: FontWeight.bold),
+                               overflow: TextOverflow.ellipsis,
+                               maxLines: 1,
+                             ),]
+                 ),
+                Divider(
+                      color: Colors.white,
+                      thickness: 0.4,
+                ),
+                 Text(model.text,
+                 style: TextStyle(
+                                 fontSize: 25,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                           ),
+                Divider(
+                      color: Colors.white,
+                      thickness: 0.4,
+                ),
+               ],
+             )
+           ],
+         ),
+         ),
+         actions: <Widget>[
+           Center(
+             child: ElevatedButton(
+             child: Text("chat",
+             style: TextStyle(
+                             fontSize: 25,
+                             color: Colors.white,
+                             fontWeight: FontWeight.bold),
+             ),
+             style: ElevatedButton.styleFrom(
+              primary: Color.fromRGBO(11, 119, 170, 1),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              padding: EdgeInsets.all(1),
+              minimumSize: Size(150, 50)
+              ),
+              onPressed: (){
+                // model.uid = คนโพส
+                //เด้งไป Chat
+              },
+             ),
+           )
+
+         ],
+         
+         
+         
+         
+         );
+         
+         });
+         print("objecct${i}");
+         print("click post ${model.pid}");
+
+       },
+       child: Container(
+         height: 160,
+         child: Column(
+           children: [
+              FeedBox(model.postby,model.heading,model.location,model.status),
+           ],
+         ),
+       ),
+     );
+     
+    
+
+  Stream<List<PostModel?>> readPost()=> FirebaseFirestore.instance.collection('post')
+  .snapshots()
+  .map((snapshot)=>snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
+  Stream<List<PostModel>> readPostz()=> FirebaseFirestore.instance.collection('post').snapshots().map((snapshot)=>
+  snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
+
+  
+  
+  // --------------
   Future<UserModel?> readUserz()async{
     final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
     final snapshot = await docUser.get();
@@ -51,14 +242,6 @@ class _FeedsState extends State<FeedsPage> {
     }
   //if(snapshot.exists){
   //}
-  }
-  Widget buildUser(UserModel user)  {
-    if(user.username == null){
-      return Text((user.username!));
-    }
-    else{
-      return Text((user.username!));
-    }
   }
     CollectionReference docPost= FirebaseFirestore.instance.collection('post');
   Widget BuildUser(UserModel user){
@@ -91,7 +274,8 @@ class _FeedsState extends State<FeedsPage> {
 
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
   Future<void> setPost(BuildContext context) async {
-                                                            print( "uid in Feed = ${profile.uid}");
+    print("insetpost");
+  print( "uid in Feed = ${profile.uid}");
     return await showDialog(
         context: context,
         builder: (context) {
@@ -122,7 +306,7 @@ class _FeedsState extends State<FeedsPage> {
                                ? Center(child: Text("NoUsers"))
                                :BuildUser(user);
                              }else{
-                           return Text(uid.toString(),
+                           return Text("",
                              style: TextStyle(
                                  fontSize: 20,
                                  color: Colors.white,
@@ -139,13 +323,13 @@ class _FeedsState extends State<FeedsPage> {
                     ),
                     TextFormField(
                       decoration: InputDecoration(hintText: "",
-                      prefixIcon: Icon(FontAwesomeIcons.mapLocation ,color: Colors.white,)
+                      prefixIcon: Icon(Icons.location_on ,color: Colors.white,)
                       ),
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
-                      maxLines: 15,
+                      maxLines: 1,
                           validator: RequiredValidator(
                             errorText: "enter"
                           ),
@@ -209,28 +393,31 @@ class _FeedsState extends State<FeedsPage> {
                         minimumSize: Size(150, 50)
                     ) ,
                     onPressed: () async {
-                      print("pid = ${postmodel.pid}");
-                      print("uid = ${postmodel.uid}");
-                      print("postby = ${postmodel.postby}");
-                      print("heading = ${postmodel.heading}");
-                      print("location = ${postmodel.location}");
+                      // print("pid = ${postmodel.pid}");
+                      // print("uid = ${postmodel.uid}");
+                      // print("postby = ${postmodel.postby}");
+                      // print("heading = ${postmodel.heading}");
+                      // print("location = ${postmodel.location}");
                       print("status = ${postmodel.status}");
-                      print("text = ${postmodel.text}");
-                      print("profuleUrl = ${postmodel.text}");
+                      // print("text = ${postmodel.text}");
+                      // print("profuleUrl = ${postmodel.text}");
                         formKey.currentState?.save();
                       Navigator.of(context).pop();
                       postmodel.pid = auth.currentUser?.uid;
                       postmodel.uid = auth.currentUser?.uid;
                       await docPost.add({
-                        "pid": postmodel.pid,
                         "uid": postmodel.uid,
+                        "pid": postmodel.pid,
                         "postby": postmodel.postby,
                         "heading": postmodel.heading,
                         "location": postmodel.location,
                         "status": postmodel.status,
                         "text":  postmodel.text,
                         "profileUrl": postmodel.profileUrl
-                      });
+                      }).then((value) => docPost.doc(value.id).update({
+                        "pid": value.id
+                      }));
+                      print("pid = ${postmodel.pid}");
                     },
                   ),
                 )
@@ -253,9 +440,11 @@ class _FeedsState extends State<FeedsPage> {
       currentTap = index;
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
+    print("infeedpage");
+    _getDistance();
     profile.uid = uid;
     return FutureBuilder(
         future: firebase,
@@ -269,33 +458,33 @@ class _FeedsState extends State<FeedsPage> {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-            return Scaffold(
-              backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-              body: ListView.builder(
-                itemCount: 15,
-                itemBuilder: (BuildContext context, int i) {
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      FeedBox("name ${i}", "title ${i}", "gps ${i}")
-                    ],
-                  );
-                },
-              ),
-              floatingActionButton: FloatingActionButton(
-                child: Icon(
-                  Icons.add,
-                  size: 40,
-                ),
-                backgroundColor: Color.fromRGBO(66, 194, 255, 1),
-                onPressed: () async {
-                  setPost(context);
-                },
-              ),
-            );
-          }
+                    return StreamBuilder<Object>(
+                      stream: null,
+                      builder: (context, snapshot) {
+                        return Scaffold(
+                          backgroundColor: Color.fromRGBO(133, 244, 255, 1),
+                          body: widgets == 0 ? Center(child: CircularProgressIndicator(),):RefreshIndicator
+                          (
+                            onRefresh: readtest,
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
+                              children: widgets
+                              )
+                            ),
+                          floatingActionButton: FloatingActionButton(
+                            child: Icon(
+                              Icons.add,
+                              size: 40,
+                            ),
+                            backgroundColor: Color.fromRGBO(66, 194, 255, 1),
+                            onPressed: () async {
+                              setPost(context);
+                            },
+                          ),
+                        );
+                      }
+                    );
+                  }
           return Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );

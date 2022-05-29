@@ -1,7 +1,9 @@
 import 'dart:ffi';
+import 'package:first_flutter/Login.dart';
 import 'package:first_flutter/Menu.dart';
 import 'package:first_flutter/Message.dart';
 import 'package:first_flutter/Model/UserModel.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:ui';
@@ -34,7 +36,10 @@ class _NavState extends State<NavPage> {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {});
   }
-
+  @override
+  void initState() {
+    super.initState();
+  }
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   final formKey = GlobalKey<FormState>();
@@ -52,7 +57,8 @@ class _NavState extends State<NavPage> {
     });
   }
 
-  final List<Widget> screens = [FeedsPage(), ProfilePage(), MessagePage()];
+  final List<Widget> screens = [
+    FeedsPage(), ProfilePage(), MessagePage()];
 
   void _onItemTap(int index) {
     setState(() {
@@ -123,6 +129,7 @@ class _NavState extends State<NavPage> {
                 currentIndex: currentTap,
                 onTap: _onItemTap,
               ),
+              
             );
           }
           return Scaffold(

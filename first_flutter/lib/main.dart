@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_flutter/Feeds.dart';
 import 'package:first_flutter/Menu.dart';
 import 'package:first_flutter/Nav.dart';
