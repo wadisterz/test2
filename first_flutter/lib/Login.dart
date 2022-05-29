@@ -1,8 +1,8 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
-import 'package:first_flutter/Feed.dart';
-import 'package:first_flutter/Model/Profile.dart';
+import 'package:first_flutter/Model/UserModel.dart';
+import 'package:first_flutter/Nav.dart';
 import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +23,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
   File? _image;
   Future getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -35,7 +41,7 @@ class _LoginState extends State<LoginPage> {
 
   final formKey = GlobalKey<FormState>();
 
-  Profile profile = Profile(uid: '' ,username: '', password: '', email: '');
+  UserModel profile = UserModel(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
   bool _showPassword = true;
   String? _Cpassword;
 
@@ -101,7 +107,7 @@ class _LoginState extends State<LoginPage> {
                                             hintText: 'Username or Email',
                                             counterText: "",
                                           ),
-                                          maxLength: 20,
+                                          maxLength: 50,
                                         ),
                                         SizedBox(height: 10),
                                         SizedBox(height: 10),
@@ -156,6 +162,7 @@ class _LoginState extends State<LoginPage> {
                                           children: [
                                             SizedBox(
                                               child: ElevatedButton(
+                                                
                                                   style:
                                                       ElevatedButton.styleFrom(
                                                           primary:
@@ -171,11 +178,11 @@ class _LoginState extends State<LoginPage> {
                                                       formKey.currentState!
                                                           .save();
                                                       try {
-                                                        await FirebaseAuth.instance.signInWithEmailAndPassword(email: profile.email, password: profile.password)
+                                                        await FirebaseAuth.instance.signInWithEmailAndPassword(email: profile.email!, password: profile.password!)
                                                         .then((value) {
                                                             formKey.currentState!.reset();
                                                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
-                                                            return FeedPage();
+                                                            return NavPage();
                                                            }));
 
                                                         });

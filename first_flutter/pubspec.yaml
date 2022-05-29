@@ -29,6 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get: ^4.6.5
+  geolocator: ^8.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,6 +45,8 @@ dependencies:
   fluttertoast: ^8.0.9
   cloud_firestore: ^3.1.13
   firebase_storage: ^10.2.14
+  flutter_svg: ^1.0.3
+
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +74,8 @@ flutter:
   assets:
     - images/handshake.png
     - images/default.png
+    - images/profileicon.png
+    - images/dealicon.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

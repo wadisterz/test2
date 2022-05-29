@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 application
-INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:3:4-33:19
+INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:6:4-38:19
 MERGED from [:firebase_auth] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_auth] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_storage] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-13:19
@@ -11,6 +11,8 @@ MERGED from [:firebase_core] C:\Users\waray\Desktop\New folder\first_flutter\bui
 MERGED from [:firebase_core] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-13:19
 MERGED from [:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-17:19
 MERGED from [:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-17:19
+MERGED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-15:19
+MERGED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:9:5-15:19
 MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\cea45e25bbe77c9713c39e234ccfd7bd\jetified-window-1.0.0-beta04\AndroidManifest.xml:24:5-31:19
 MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\cea45e25bbe77c9713c39e234ccfd7bd\jetified-window-1.0.0-beta04\AndroidManifest.xml:24:5-31:19
 MERGED from [com.google.firebase:firebase-auth:21.0.3] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\0cd31a8007b82ec10dce55ca37be1d81\jetified-firebase-auth-21.0.3\AndroidManifest.xml:26:5-71:19
@@ -25,6 +27,10 @@ MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.0-beta06] C:\Use
 MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.0-beta06] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\7b04bf88720a07df5a93c0ee693619f5\jetified-firebase-appcheck-interop-16.0.0-beta06\AndroidManifest.xml:24:5-20
 MERGED from [com.google.firebase:firebase-common:20.1.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b25e52f5739b5665d39d607baa2467f6\jetified-firebase-common-20.1.0\AndroidManifest.xml:25:5-38:19
 MERGED from [com.google.firebase:firebase-common:20.1.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b25e52f5739b5665d39d607baa2467f6\jetified-firebase-common-20.1.0\AndroidManifest.xml:25:5-38:19
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\d1087e2bd1b5cc815b8adf10bc3b4e91\jetified-play-services-location-17.0.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\d1087e2bd1b5cc815b8adf10bc3b4e91\jetified-play-services-location-17.0.0\AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\95761007852e19c0e0c5e48d5379ed12\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\95761007852e19c0e0c5e48d5379ed12\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b9f3ea16de2ef1ca92c5362ec604ec66\jetified-play-services-safetynet-17.0.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b9f3ea16de2ef1ca92c5362ec604ec66\jetified-play-services-safetynet-17.0.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\1c0769389455a4c14b7a50bc2530cb4a\jetified-play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
@@ -42,17 +48,18 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\wa
 	android:name
 		INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml
 manifest
-ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-34:12
-INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-34:12
-INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-34:12
-INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-34:12
-MERGED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-34:12
+ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-39:12
+INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-39:12
+INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-39:12
+INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-39:12
+MERGED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-39:12
 MERGED from [:firebase_auth] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_auth\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-15:12
 MERGED from [:firebase_storage] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_storage\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-15:12
 MERGED from [:cloud_firestore] C:\Users\waray\Desktop\New folder\first_flutter\build\cloud_firestore\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-15:12
 MERGED from [:firebase_core] C:\Users\waray\Desktop\New folder\first_flutter\build\firebase_core\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-15:12
 MERGED from [:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-19:12
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\waray\Desktop\New folder\first_flutter\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-17:12
 MERGED from [:fluttertoast] C:\Users\waray\Desktop\New folder\first_flutter\build\fluttertoast\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\a3b86b42fafb2019c6d99a912992ce19\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.window:window:1.0.0-beta04] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\cea45e25bbe77c9713c39e234ccfd7bd\jetified-window-1.0.0-beta04\AndroidManifest.xml:17:1-33:12
@@ -63,6 +70,8 @@ MERGED from [com.google.firebase:firebase-auth-interop:20.0.0] C:\Users\waray\.g
 MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.0-beta06] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\7b04bf88720a07df5a93c0ee693619f5\jetified-firebase-appcheck-interop-16.0.0-beta06\AndroidManifest.xml:15:1-26:12
 MERGED from [com.google.firebase:firebase-common:20.1.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b25e52f5739b5665d39d607baa2467f6\jetified-firebase-common-20.1.0\AndroidManifest.xml:15:1-40:12
 MERGED from [androidx.exifinterface:exifinterface:1.3.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b7a4bedb3ae5643a7a7af8bc9a9af596\exifinterface-1.3.0\AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\d1087e2bd1b5cc815b8adf10bc3b4e91\jetified-play-services-location-17.0.0\AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\95761007852e19c0e0c5e48d5379ed12\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.4.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\1579bd1641f52804fc09caeaeac50d9c\jetified-play-services-auth-api-phone-17.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b9f3ea16de2ef1ca92c5362ec604ec66\jetified-play-services-safetynet-17.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:firebase-database-collection:18.0.1] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b0bd26d975251e4d3f9a8e50f0fd17fe\jetified-firebase-database-collection-18.0.1\AndroidManifest.xml:2:1-9:12
@@ -109,14 +118,22 @@ INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\de
 		INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\debug\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-34:12
+		ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-39:12
 		INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\debug\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-34:12
+		ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:1-39:12
 		INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\debug\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:3:5-78
+	android:name
+		ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:3:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:4:5-80
+	android:name
+		ADDED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml:4:22-78
 uses-sdk
 INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\waray\Desktop\New folder\first_flutter\android\app\src\main\AndroidManifest.xml
@@ -133,6 +150,8 @@ MERGED from [:image_picker_android] C:\Users\waray\Desktop\New folder\first_flut
 MERGED from [:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\waray\Desktop\New folder\first_flutter\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] C:\Users\waray\Desktop\New folder\first_flutter\build\flutter_plugin_android_lifecycle\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:fluttertoast] C:\Users\waray\Desktop\New folder\first_flutter\build\fluttertoast\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [:fluttertoast] C:\Users\waray\Desktop\New folder\first_flutter\build\fluttertoast\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
 MERGED from [androidx.window:window-java:1.0.0-beta04] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\a3b86b42fafb2019c6d99a912992ce19\jetified-window-java-1.0.0-beta04\AndroidManifest.xml:19:5-21:41
@@ -153,6 +172,10 @@ MERGED from [com.google.firebase:firebase-common:20.1.0] C:\Users\waray\.gradle\
 MERGED from [com.google.firebase:firebase-common:20.1.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b25e52f5739b5665d39d607baa2467f6\jetified-firebase-common-20.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b7a4bedb3ae5643a7a7af8bc9a9af596\exifinterface-1.3.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b7a4bedb3ae5643a7a7af8bc9a9af596\exifinterface-1.3.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\d1087e2bd1b5cc815b8adf10bc3b4e91\jetified-play-services-location-17.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\d1087e2bd1b5cc815b8adf10bc3b4e91\jetified-play-services-location-17.0.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\95761007852e19c0e0c5e48d5379ed12\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\95761007852e19c0e0c5e48d5379ed12\jetified-play-services-places-placereport-17.0.0\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.4.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\1579bd1641f52804fc09caeaeac50d9c\jetified-play-services-auth-api-phone-17.4.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-auth-api-phone:17.4.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\1579bd1641f52804fc09caeaeac50d9c\jetified-play-services-auth-api-phone-17.4.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-safetynet:17.0.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\b9f3ea16de2ef1ca92c5362ec604ec66\jetified-play-services-safetynet-17.0.0\AndroidManifest.xml:20:5-44
@@ -309,6 +332,20 @@ ADDED from [:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutt
 		ADDED from [:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:15:17-72
 	android:name
 		ADDED from [:image_picker_android] C:\Users\waray\Desktop\New folder\first_flutter\build\image_picker_android\intermediates\library_manifest\debug\AndroidManifest.xml:14:17-67
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-77
+	android:name
+		ADDED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-74
+service#com.baseflow.geolocator.GeolocatorLocationService
+ADDED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:10:9-14:56
+	android:enabled
+		ADDED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:12:13-35
+	android:exported
+		ADDED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:13:13-37
+	android:foregroundServiceType
+		ADDED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:14:13-53
+	android:name
+		ADDED from [:geolocator_android] C:\Users\waray\Desktop\New folder\first_flutter\build\geolocator_android\intermediates\library_manifest\debug\AndroidManifest.xml:11:13-77
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.0.0-beta04] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\cea45e25bbe77c9713c39e234ccfd7bd\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
 	android:required

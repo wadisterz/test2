@@ -1,8 +1,8 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 import 'package:first_flutter/Login.dart';
-import 'package:first_flutter/Model/Profile.dart';
+import 'package:first_flutter/Model/UserModel.dart';
+import 'package:first_flutter/Nav.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,27 +27,24 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _HomeState extends State<RegisterPage> {
-  File? _image;
-  Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = File(image!.path);
-    });
-  }
-
+  //final AuthService _authService = AuthService();
   //FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
   final formKey = GlobalKey<FormState>();
-  CollectionReference userCollection =
-      FirebaseFirestore.instance.collection("user");
+  final fireauth = FirebaseAuth.instance;
+  final String? uid = FirebaseAuth.instance.currentUser?.uid;
+  final firestore = FirebaseFirestore.instance;
+  CollectionReference userCollection = FirebaseFirestore.instance.collection("user");
 
-  Profile profile = Profile(uid: '', username: '', password: '', email: '');
+
+  UserModel profile = UserModel(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
   bool _showPassword = true;
   String? _Cpassword;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
+      
         future: firebase,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -60,7 +57,8 @@ class _HomeState extends State<RegisterPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
-                backgroundColor: Color.fromRGBO(133, 244, 255, 1), body: Container(
+                backgroundColor: Color.fromRGBO(133, 244, 255, 1),
+                body: Container(
                     child: Padding(
                         padding: const EdgeInsets.fromLTRB(20, 50, 20, 1),
                         child: Form(
@@ -76,10 +74,10 @@ class _HomeState extends State<RegisterPage> {
                                       children: [
                                         SizedBox(height: 50),
                                         Image.asset(
-                                       ('images/handshake.png'),
-                                       width: 150,
-                                       height: 150,
-                                       ),
+                                          ('images/handshake.png'),
+                                          width: 150,
+                                          height: 150,
+                                        ),
                                         TextFormField(
                                           validator:
                                               RequiredValidator(errorText: "*"),
@@ -265,22 +263,25 @@ class _HomeState extends State<RegisterPage> {
                                                             .instance
                                                             .createUserWithEmailAndPassword(
                                                                 email: profile
-                                                                    .email,
+                                                                    .email!,
                                                                 password: profile
-                                                                    .password)
+                                                                    .password!)
                                                             .then(
                                                                 (value) async {
                                                           profile.uid =
                                                               value.user!.uid;
                                                           await firebase.then(
                                                               (value) async {
-                                                            await userCollection
-                                                                .add({
+                                                            await userCollection.doc(profile.uid).set(
+                                                                {
                                                               "username":
                                                                   profile
                                                                       .username,
                                                               "email":
                                                                   profile.email,
+                                                              "uid":
+                                                                  profile.uid
+                                                                
                                                             });
 
                                                             formKey
@@ -294,7 +295,7 @@ class _HomeState extends State<RegisterPage> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) {
-                                                              return LoginPage();
+                                                              return NavPage();
                                                             }));
                                                           });
                                                         });
