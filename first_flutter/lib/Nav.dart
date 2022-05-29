@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:first_flutter/Login.dart';
 import 'package:first_flutter/Menu.dart';
 import 'package:first_flutter/Message.dart';
 import 'package:first_flutter/Model/UserModel.dart';
@@ -35,7 +36,10 @@ class _NavState extends State<NavPage> {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {});
   }
-
+  @override
+  void initState() {
+    super.initState();
+  }
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   final formKey = GlobalKey<FormState>();

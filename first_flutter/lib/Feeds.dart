@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:first_flutter/Model/PostModel.dart';
 import 'package:first_flutter/Model/UserModel.dart';
 import 'package:first_flutter/Model/posttest.dart';
@@ -94,28 +95,135 @@ if (permission == LocationPermission.deniedForever) {
   Future<Null> readtest() async{
     await Firebase.initializeApp().then((value) async {
       print("data initialize");
-      await FirebaseFirestore.instance.collection('post').snapshots().listen((event) {
+      await FirebaseFirestore.instance.collection('post').orderBy('status',descending: false).snapshots().listen((event) {
+        if(refresh == true){
         for(var snapshots in event.docs){
           print('inloop = ${i}');
           Map<String, dynamic> map = snapshots.data();
           print('map = $map');
           posttest modelpost = posttest.fromMap(map);
           setState(() {
-            widgets.add(createWidget(modelpost));
+            widgets.add(createWidget(modelpost,i));
           });
           print("widgets lengtt = ${widgets.length}");
           i++;
-        }
+          }
         refresh = false;
+        }
       });
     });
   }
   
-  Widget createWidget(posttest model)=> 
-     Column(
-       children: [
-         FeedBox(model.postby,model.heading,model.location),
-       ],
+  Widget createWidget(posttest model, int i)=> 
+     GestureDetector(
+       onTap: (){
+         showDialog(context: context, builder: (BuildContext context){
+           return AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+         backgroundColor: Color.fromRGBO(47, 161, 215, 1),
+         content: SingleChildScrollView(
+           child: Column(mainAxisSize:MainAxisSize.min,
+           children: [
+             CircleAvatar(
+               radius: 35,
+              backgroundImage: NetworkImage(
+               "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  ")
+             ),
+             Column(
+               children: [
+                 Text(model.postby,
+                 style: TextStyle(
+                                 fontSize: 20,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                             overflow: TextOverflow.ellipsis,
+                             maxLines: 1,
+                           ),
+                Divider(
+                      color: Colors.white,
+                      thickness: 0.4,
+                ),
+                 Text(model.heading,
+                 style: TextStyle(
+                                 fontSize: 25,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                             overflow: TextOverflow.ellipsis,
+                             maxLines: 1,
+                           ),
+                 Wrap(
+                   children: [
+                    Icon(Icons.location_on,
+                    color: Colors.white,),
+                    Text(model.location,
+                   style: TextStyle(
+                                   fontSize: 25,
+                                   color: Colors.white,
+                                   fontWeight: FontWeight.bold),
+                               overflow: TextOverflow.ellipsis,
+                               maxLines: 1,
+                             ),]
+                 ),
+                Divider(
+                      color: Colors.white,
+                      thickness: 0.4,
+                ),
+                 Text(model.text,
+                 style: TextStyle(
+                                 fontSize: 25,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                           ),
+                Divider(
+                      color: Colors.white,
+                      thickness: 0.4,
+                ),
+               ],
+             )
+           ],
+         ),
+         ),
+         actions: <Widget>[
+           Center(
+             child: ElevatedButton(
+             child: Text("chat",
+             style: TextStyle(
+                             fontSize: 25,
+                             color: Colors.white,
+                             fontWeight: FontWeight.bold),
+             ),
+             style: ElevatedButton.styleFrom(
+              primary: Color.fromRGBO(11, 119, 170, 1),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              padding: EdgeInsets.all(1),
+              minimumSize: Size(150, 50)
+              ),
+              onPressed: (){
+                // model.uid = คนโพส
+                //เด้งไป Chat
+              },
+             ),
+           )
+
+         ],
+         
+         
+         
+         
+         );
+         
+         });
+         print("objecct${i}");
+         print("click post ${model.pid}");
+
+       },
+       child: Container(
+         height: 160,
+         child: Column(
+           children: [
+              FeedBox(model.postby,model.heading,model.location,model.status),
+           ],
+         ),
+       ),
      );
      
     
@@ -293,7 +401,7 @@ if (permission == LocationPermission.deniedForever) {
                       // print("postby = ${postmodel.postby}");
                       // print("heading = ${postmodel.heading}");
                       // print("location = ${postmodel.location}");
-                      // print("status = ${postmodel.status}");
+                      print("status = ${postmodel.status}");
                       // print("text = ${postmodel.text}");
                       // print("profuleUrl = ${postmodel.text}");
                         formKey.currentState?.save();
@@ -301,15 +409,18 @@ if (permission == LocationPermission.deniedForever) {
                       postmodel.pid = auth.currentUser?.uid;
                       postmodel.uid = auth.currentUser?.uid;
                       await docPost.add({
-                        "pid": postmodel.pid,
                         "uid": postmodel.uid,
+                        "pid": postmodel.pid,
                         "postby": postmodel.postby,
                         "heading": postmodel.heading,
                         "location": postmodel.location,
                         "status": postmodel.status,
                         "text":  postmodel.text,
                         "profileUrl": postmodel.profileUrl
-                      });
+                      }).then((value) => docPost.doc(value.id).update({
+                        "pid": value.id
+                      }));
+                      print("pid = ${postmodel.pid}");
                     },
                   ),
                 )
@@ -332,6 +443,7 @@ if (permission == LocationPermission.deniedForever) {
       currentTap = index;
     });
   }
+  
   @override
   Widget build(BuildContext context) {
     print("infeedpage");
@@ -357,7 +469,10 @@ if (permission == LocationPermission.deniedForever) {
                           body: widgets == 0 ? Center(child: CircularProgressIndicator(),):RefreshIndicator
                           (
                             onRefresh: readtest,
-                            child: ListView(children:  widgets,)
+                            child: ListView(
+                              scrollDirection: Axis.vertical,
+                              children: widgets
+                              )
                             ),
                           floatingActionButton: FloatingActionButton(
                             child: Icon(

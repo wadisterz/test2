@@ -23,6 +23,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginPage> {
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
   File? _image;
   Future getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:first_flutter/Login.dart';
 import 'package:first_flutter/Model/UserModel.dart';
+import 'package:first_flutter/Nav.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -294,7 +295,7 @@ class _HomeState extends State<RegisterPage> {
                                                                 MaterialPageRoute(
                                                                     builder:
                                                                         (context) {
-                                                              return LoginPage();
+                                                              return NavPage();
                                                             }));
                                                           });
                                                         });
