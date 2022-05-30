@@ -431,7 +431,6 @@ if (permission == LocationPermission.deniedForever) {
                     Divider(color: Colors.white,
                     thickness: 0.2,),
                   ]),
-                 
                 ),
               ),
               actions: <Widget>[
