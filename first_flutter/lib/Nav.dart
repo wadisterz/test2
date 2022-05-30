@@ -3,6 +3,7 @@ import 'package:first_flutter/Login.dart';
 import 'package:first_flutter/Menu.dart';
 import 'package:first_flutter/Message.dart';
 import 'package:first_flutter/Model/UserModel.dart';
+import 'package:first_flutter/Noti.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -88,7 +89,12 @@ class _NavState extends State<NavPage> {
                   elevation: 0,
                   actions: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                                return NotiPage();
+                      }));
+                      },
                       icon: Icon((FontAwesomeIcons.bell)),
                     )
                   ],

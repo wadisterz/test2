@@ -23,7 +23,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Model/UserModel2.dart';
 import 'service/FeedBox.dart';
+import 'package:get/get.dart';
+import 'package:geolocator_android/geolocator_android.dart';
+
 
 class FeedsPage extends StatefulWidget {
   const FeedsPage({Key? key}) : super(key: key);
@@ -92,16 +96,27 @@ if (permission == LocationPermission.deniedForever) {
   Future<Null> readtest() async{
     await Firebase.initializeApp().then((value) async {
       print("data initialize");
-      await FirebaseFirestore.instance.collection('post').orderBy('status',descending: false).snapshots().listen((event) {
+      await FirebaseFirestore.instance.collection('post').orderBy('status',descending: false).snapshots().listen((event) async {
         if(refresh == true){
         for(var snapshots in event.docs){
           print('inloop = ${i}');
           Map<String, dynamic> map = snapshots.data();
           print('map = $map');
           posttest modelpost = posttest.fromMap(map);
+    _currentUserPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print(_currentUserPosition!.latitude);
+    print(_currentUserPosition!.longitude);
+    print("modelpost la = ${modelpost.latitude}");
+    print("modelpost long = ${modelpost.longitude}");
+    double storelat = modelpost.latitude;
+    double storelong = modelpost.longitude;
+    distanceKM = await (Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong)/1000);
+    print("distance = $distanceKM");
+      if(distanceKM! < 5 ){
           setState(() {
-            widgets.add(createWidget(modelpost,i));
-          });
+            widgets.add(createWidget(modelpost,i,distanceKM!));
+          print("done-----------------------------------------");
+          });}
           print("widgets lengtt = ${widgets.length}");
           i++;
           }
@@ -111,7 +126,7 @@ if (permission == LocationPermission.deniedForever) {
     });
   }
   
-  Widget createWidget(posttest model, int i)=> 
+  Widget createWidget(posttest model, int i , double diskm)=> 
      GestureDetector(
        onTap: (){
          showDialog(context: context, builder: (BuildContext context){
@@ -194,7 +209,22 @@ if (permission == LocationPermission.deniedForever) {
               padding: EdgeInsets.all(1),
               minimumSize: Size(150, 50)
               ),
-              onPressed: (){
+              onPressed: ()async {
+                await docDeal.add({
+                "dealid": "",
+                "heading": model.heading,
+                "detail": model.text,
+                "postbyid": model.uid,
+                "takebyid": auth.currentUser!.uid,
+                "postby": model.postby,
+                "takeby": profile2.username,
+                "succeed": false,
+              }).then((value) => docDeal.doc(value.id).update({
+                "dealid": value.id
+              }));
+                await docPost.doc(model.pid).update({
+                  "status":  true
+              });
                 // model.uid = คนโพส
                 //เด้งไป Chat
               },
@@ -211,13 +241,12 @@ if (permission == LocationPermission.deniedForever) {
          });
          print("objecct${i}");
          print("click post ${model.pid}");
-
        },
        child: Container(
          height: 160,
          child: Column(
            children: [
-              FeedBox(model.postby,model.heading,model.location,model.status),
+              FeedBox(model.postby,model.heading,"${diskm.toStringAsFixed(1)} km",model.status),
            ],
          ),
        ),
@@ -231,6 +260,9 @@ if (permission == LocationPermission.deniedForever) {
   Stream<List<PostModel>> readPostz()=> FirebaseFirestore.instance.collection('post').snapshots().map((snapshot)=>
   snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
 
+
+
+
   
   
   // --------------
@@ -243,7 +275,12 @@ if (permission == LocationPermission.deniedForever) {
   //if(snapshot.exists){
   //}
   }
+
     CollectionReference docPost= FirebaseFirestore.instance.collection('post');
+    CollectionReference docDeal= FirebaseFirestore.instance.collection('deal');
+
+
+
   Widget BuildUser(UserModel user){
     if(user.username == null){
                              return Text("null",
@@ -268,7 +305,7 @@ if (permission == LocationPermission.deniedForever) {
                              
     }
   }
-  PostModel postmodel = PostModel(pid: "", uid: "", postby: "", heading: "", location: "", status: false, text: "", profileUrl: "");
+  PostModel postmodel = PostModel(pid: "", uid: "", postby: "", heading: "", location: "", status: false, text: "", profileUrl: "",latitude: 0.0, longitude: 0.0);
 
   
 
@@ -385,7 +422,14 @@ if (permission == LocationPermission.deniedForever) {
               actions: <Widget>[
                 Center(
                   child: ElevatedButton(
-                    child: Text("test2"),
+                    child: Text("OFFER",
+                    style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
+                    )
+                    
+                    ),
                     style: ElevatedButton.styleFrom(
                         primary: Color.fromRGBO(11, 119, 170, 1),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -413,7 +457,9 @@ if (permission == LocationPermission.deniedForever) {
                         "location": postmodel.location,
                         "status": postmodel.status,
                         "text":  postmodel.text,
-                        "profileUrl": postmodel.profileUrl
+                        "profileUrl": postmodel.profileUrl,
+                        "latitude": _currentUserPosition!.latitude,
+                        "longitude": _currentUserPosition!.longitude
                       }).then((value) => docPost.doc(value.id).update({
                         "pid": value.id
                       }));
@@ -430,6 +476,7 @@ if (permission == LocationPermission.deniedForever) {
   final formKey = GlobalKey<FormState>();
 
   UserModel profile = UserModel(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
+  UserModel2 profile2 = UserModel2(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
   bool _showPassword = true;
   String? _Cpassword;
   int currentTap = 0;
