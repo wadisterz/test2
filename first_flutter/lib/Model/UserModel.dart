@@ -29,12 +29,6 @@ class UserModel {
     succeedcount: json['succeed']
     
   );
- //int dealcount = 0 ;
-  //String profileUrl ;
-  //double rate;
-  //String bio;
-  //String dealcount; 
-  
   
   
 }

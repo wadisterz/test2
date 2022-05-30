@@ -18,6 +18,7 @@ class FeedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("dis km = ${gps}");
     return Container(
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
