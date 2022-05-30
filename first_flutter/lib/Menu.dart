@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:first_flutter/Model/UserModel.dart';
+import 'package:first_flutter/Mydeals.dart';
 import 'package:first_flutter/service/AddPostButton.dart';
 import 'package:first_flutter/Nav.dart';
 import 'package:first_flutter/Profile.dart';
@@ -125,23 +126,30 @@ class _MenuState extends State<MenuPage> {
                           ),
                         ),
                         Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(66, 194, 255, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 1,
-                                      blurRadius: 4,
-                                      offset: Offset(0.0, 3.0))
-                                ]),
-                            width: 120,
-                            height: 100,
-                            child: Image.asset(
-                              'images/dealicon.png',
-                              height: 72,
-                              width: 72,
+                          child: GestureDetector(
+                            onTap: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                            return DealPage();
+                             })); },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(66, 194, 255, 1),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        spreadRadius: 1,
+                                        blurRadius: 4,
+                                        offset: Offset(0.0, 3.0))
+                                  ]),
+                              width: 120,
+                              height: 100,
+                              child: Image.asset(
+                                'images/dealicon.png',
+                                height: 72,
+                                width: 72,
+                              ),
+                              
                             ),
                           ),
                         ),

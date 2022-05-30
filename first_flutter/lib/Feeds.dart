@@ -41,6 +41,8 @@ class _FeedsState extends State<FeedsPage> {
   @override
    void initState(){
      super.initState();
+     print("init");
+     readuser1();
      readtest();
    }
   Position? _currentUserPosition;
@@ -74,7 +76,6 @@ if (permission == LocationPermission.deniedForever) {
     double storelat = 13.74815;
     double storelong = 100.4786914;
     distanceKM = await Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong);
-    print("distance = $distanceKM");
   }
   final auth = FirebaseAuth.instance;
   final String? uid = FirebaseAuth.instance.currentUser?.uid;
@@ -95,38 +96,40 @@ if (permission == LocationPermission.deniedForever) {
     bool refresh = true;
   Future<Null> readtest() async{
     await Firebase.initializeApp().then((value) async {
+    final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
+    final snapshot = await docUser.get();
+          Map<String, dynamic> map = snapshot.data()!;
+          print('map = $map');
+          UserModel2 modelpost2 = UserModel2.fromMap(map);
       print("data initialize");
       await FirebaseFirestore.instance.collection('post').orderBy('status',descending: false).snapshots().listen((event) async {
-        if(refresh == true){
         for(var snapshots in event.docs){
           print('inloop = ${i}');
           Map<String, dynamic> map = snapshots.data();
           print('map = $map');
           posttest modelpost = posttest.fromMap(map);
     _currentUserPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print(_currentUserPosition!.latitude);
-    print(_currentUserPosition!.longitude);
-    print("modelpost la = ${modelpost.latitude}");
-    print("modelpost long = ${modelpost.longitude}");
+    // print(_currentUserPosition!.latitude);
+    // print(_currentUserPosition!.longitude);
+    // print("modelpost la = ${modelpost.latitude}");
+    // print("modelpost long = ${modelpost.longitude}");
     double storelat = modelpost.latitude;
     double storelong = modelpost.longitude;
     distanceKM = await (Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong)/1000);
-    print("distance = $distanceKM");
+    print("distance before if = $distanceKM");
       if(distanceKM! < 5 ){
           setState(() {
-            widgets.add(createWidget(modelpost,i,distanceKM!));
-          print("done-----------------------------------------");
+            widgets.add(createWidget(modelpost,i,distanceKM!,modelpost2));
+          print("insetState $i");
           });}
           print("widgets lengtt = ${widgets.length}");
           i++;
           }
-        refresh = false;
-        }
       });
     });
   }
   
-  Widget createWidget(posttest model, int i , double diskm)=> 
+  Widget createWidget(posttest model, int i , double diskm,UserModel2 modelpost2)=> 
      GestureDetector(
        onTap: (){
          showDialog(context: context, builder: (BuildContext context){
@@ -217,7 +220,7 @@ if (permission == LocationPermission.deniedForever) {
                 "postbyid": model.uid,
                 "takebyid": auth.currentUser!.uid,
                 "postby": model.postby,
-                "takeby": profile2.username,
+                "takeby": modelpost2.username,
                 "succeed": false,
               }).then((value) => docDeal.doc(value.id).update({
                 "dealid": value.id
@@ -254,12 +257,24 @@ if (permission == LocationPermission.deniedForever) {
      
     
 
-  Stream<List<PostModel?>> readPost()=> FirebaseFirestore.instance.collection('post')
-  .snapshots()
-  .map((snapshot)=>snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
-  Stream<List<PostModel>> readPostz()=> FirebaseFirestore.instance.collection('post').snapshots().map((snapshot)=>
-  snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
-
+  // Stream<List<PostModel?>> readPost()=> FirebaseFirestore.instance.collection('post')
+  // .snapshots()
+  // .map((snapshot)=>snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
+  // Stream<List<PostModel>> readPostz()=> FirebaseFirestore.instance.collection('post').snapshots().map((snapshot)=>
+  // snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
+    Future<Null> readuser1() async{
+    await Firebase.initializeApp().then((value) async {
+    final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
+    final snapshot = await docUser.get();
+          Map<String, dynamic> map = snapshot.data()!;
+          print('map = $map');
+          UserModel2 modelpost = UserModel2.fromMap(map);
+          print("modedelpost = ${modelpost.username}");
+          profile2.username = modelpost.username;
+        }
+        )
+        ;
+        }
 
 
 
@@ -505,19 +520,13 @@ if (permission == LocationPermission.deniedForever) {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-                    return StreamBuilder<Object>(
-                      stream: null,
-                      builder: (context, snapshot) {
                         return Scaffold(
                           backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-                          body: widgets == 0 ? Center(child: CircularProgressIndicator(),):RefreshIndicator
-                          (
-                            onRefresh: readtest,
-                            child: ListView(
+                          body: widgets.isEmpty ? Center(child: CircularProgressIndicator()):
+                            ListView  (
                               scrollDirection: Axis.vertical,
                               children: widgets
-                              )
-                            ),
+                              ),
                           floatingActionButton: FloatingActionButton(
                             child: Icon(
                               Icons.add,
@@ -530,8 +539,6 @@ if (permission == LocationPermission.deniedForever) {
                           ),
                         );
                       }
-                    );
-                  }
           return Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );
