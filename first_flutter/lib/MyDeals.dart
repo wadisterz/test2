@@ -3,6 +3,8 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:first_flutter/Menu.dart';
+import 'package:first_flutter/Model/DealModel.dart';
 import 'package:first_flutter/Model/PostModel.dart';
 import 'package:first_flutter/Model/UserModel.dart';
 import 'package:first_flutter/Model/posttest.dart';
@@ -29,18 +31,19 @@ import 'package:get/get.dart';
 import 'package:geolocator_android/geolocator_android.dart';
 
 
-class FeedsPage extends StatefulWidget {
-  const FeedsPage({Key? key}) : super(key: key);
+class MyDeals extends StatefulWidget {
+  const MyDeals({Key? key}) : super(key: key);
 
   @override
-  State<FeedsPage> createState() => _FeedsState();
+  State<MyDeals> createState() => _MyDealsState();
 }
 
-class _FeedsState extends State<FeedsPage> {
+class _MyDealsState extends State<MyDeals> {
 
   @override
    void initState(){
      super.initState();
+     print("init deals");
      readtest();
    }
   Position? _currentUserPosition;
@@ -68,13 +71,6 @@ if (permission == LocationPermission.deniedForever) {
   return Future.error(
       'Location permissions are permanently denied, we cannot request permissions.');
 }
-    _currentUserPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print(_currentUserPosition!.latitude);
-    print(_currentUserPosition!.longitude);
-    double storelat = 13.74815;
-    double storelong = 100.4786914;
-    distanceKM = await Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong);
-    print("distance = $distanceKM");
   }
   final auth = FirebaseAuth.instance;
   final String? uid = FirebaseAuth.instance.currentUser?.uid;
@@ -82,15 +78,6 @@ if (permission == LocationPermission.deniedForever) {
   Stream<List<UserModel>> readUser()=> FirebaseFirestore.instance.collection('user')
   .snapshots()
   .map((snapshot)=>snapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList());
-
-  String getuser (String? string){
-    if(string == null){
-      return 'null';
-    }
-    else {
-      return string;
-    }
-  }
     int i = 0;
     bool refresh = true;
   Future<Null> readtest() async{
@@ -101,37 +88,26 @@ if (permission == LocationPermission.deniedForever) {
           print('map = $map');
           UserModel2 modelpost2 = UserModel2.fromMap(map);
       print("data initialize");
-      await FirebaseFirestore.instance.collection('post').orderBy('status',descending: false).snapshots().listen((event) async {
+      await FirebaseFirestore.instance.collection('deal').where('postbyid',isEqualTo: uid ).orderBy('succeed',descending: false).snapshots().listen((event) async {
         if(refresh == true){
         for(var snapshots in event.docs){
           print('inloop = ${i}');
           Map<String, dynamic> map = snapshots.data();
           print('map = $map');
-          posttest modelpost = posttest.fromMap(map);
-    _currentUserPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print(_currentUserPosition!.latitude);
-    print(_currentUserPosition!.longitude);
-    print("modelpost la = ${modelpost.latitude}");
-    print("modelpost long = ${modelpost.longitude}");
-    double storelat = modelpost.latitude;
-    double storelong = modelpost.longitude;
-    distanceKM = await (Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong)/1000);
-    print("distance = $distanceKM");
-      if(distanceKM! < 5 ){
+          DealModel modeldeal = DealModel.fromMap(map);
           setState(() {
-            widgets.add(createWidget(modelpost,i,distanceKM!,modelpost2));
+            widgets.add(createWidget(modeldeal,i,distanceKM!,modelpost2));
           print("done-----------------------------------------");
           });}
           print("widgets lengtt = ${widgets.length}");
           i++;
-          }
-        refresh = false;
         }
+        refresh = false;
       });
     });
   }
   
-  Widget createWidget(posttest model, int i , double diskm,UserModel2 modelpost2)=> 
+  Widget createWidget(DealModel model, int i , double diskm,UserModel2 modelpost2)=> 
      GestureDetector(
        onTap: (){
          showDialog(context: context, builder: (BuildContext context){
@@ -148,6 +124,14 @@ if (permission == LocationPermission.deniedForever) {
              Column(
                children: [
                  Text(model.postby,
+                 style: TextStyle(
+                                 fontSize: 20,
+                                 color: Colors.white,
+                                 fontWeight: FontWeight.bold),
+                             overflow: TextOverflow.ellipsis,
+                             maxLines: 1,
+                           ),
+                 Text("Takeby: ${model.takeby}",
                  style: TextStyle(
                                  fontSize: 20,
                                  color: Colors.white,
@@ -184,7 +168,7 @@ if (permission == LocationPermission.deniedForever) {
                       color: Colors.white,
                       thickness: 0.4,
                 ),
-                 Text(model.text,
+                 Text(model.detail,
                  style: TextStyle(
                                  fontSize: 25,
                                  color: Colors.white,
@@ -215,25 +199,12 @@ if (permission == LocationPermission.deniedForever) {
               minimumSize: Size(150, 50)
               ),
               onPressed: ()async {
-                      Navigator.of(context).pop();
-                await docDeal.add({
-                "dealid": "",
-                "heading": model.heading,
-                "detail": model.text,
-                "location": model.location,
-                "postbyid": model.uid,
-                "takebyid": auth.currentUser!.uid,
-                "postby": model.postby,
-                "takeby": modelpost2.username,
-                "succeed": false,
-              }).then((value) => docDeal.doc(value.id).update({
-                "dealid": value.id
-              }));
-                await docPost.doc(model.pid).update({
-                  "status":  true
-              });
-                // model.uid = คนโพส
-                //เด้งไป Chat
+                Navigator.of(context).pop();
+                await docDeal.doc(model.dealid).update({
+                  "succeed": true
+                });
+                
+
               },
              ),
            )
@@ -247,13 +218,13 @@ if (permission == LocationPermission.deniedForever) {
          
          });
          print("objecct${i}");
-         print("click post ${model.pid}");
+         print("click post ${model.dealid}");
        },
        child: Container(
          height: 160,
          child: Column(
            children: [
-              FeedBox(model.postby,model.heading,"${diskm.toStringAsFixed(1)} km",model.status),
+              FeedBox(model.postby,model.heading,model.location,model.succeed),
            ],
          ),
        ),
@@ -512,7 +483,30 @@ if (permission == LocationPermission.deniedForever) {
             );
           }
           if (snapshot.connectionState == ConnectionState.done) {
-                    return StreamBuilder<Object>(
+            return Scaffold(
+              backgroundColor: Color.fromRGBO(133, 244, 255, 1),
+              appBar: AppBar(
+                  //title: Text("test"),
+                  backgroundColor: Color.fromRGBO(133, 244, 255, 1),
+                  elevation: 0,
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon((FontAwesomeIcons.bell)),
+                    )
+                  ],
+                  leading: Padding(
+                    padding: const EdgeInsets.all(0),
+                    child: IconButton(
+                        onPressed: (
+                          
+                        ) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                            return MenuPage();
+                          }));
+                        }, icon: Icon((FontAwesomeIcons.arrowLeft))),
+                  )),
+                    body: StreamBuilder<Object>(
                       stream: null,
                       builder: (context, snapshot) {
                         return Scaffold(
@@ -525,20 +519,10 @@ if (permission == LocationPermission.deniedForever) {
                               children: widgets
                               )
                             ),
-                          floatingActionButton: FloatingActionButton(
-                            child: Icon(
-                              Icons.add,
-                              size: 40,
-                            ),
-                            backgroundColor: Color.fromRGBO(66, 194, 255, 1),
-                            onPressed: () async {
-                              setPost(context);
-                            },
-                          ),
                         );
                       }
-                    );
-                  }
+                    )
+    );}
           return Scaffold(
             body: Center(child: CircularProgressIndicator()),
           );

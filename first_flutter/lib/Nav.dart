@@ -59,6 +59,7 @@ class _NavState extends State<NavPage> {
   }
 
   final List<Widget> screens = [
+                          
     FeedsPage(), ProfilePage(), MessagePage()];
 
   void _onItemTap(int index) {
@@ -85,7 +86,8 @@ class _NavState extends State<NavPage> {
               backgroundColor: Color.fromRGBO(133, 244, 255, 1),
               appBar: AppBar(
                   //title: Text("test"),
-                  backgroundColor: Color.fromRGBO(133, 244, 255, 1),
+                  backgroundColor:currentTap ==1 ?Color.fromRGBO(66, 194, 255, 1) :Color.fromRGBO(133, 244, 255, 1),
+
                   elevation: 0,
                   actions: [
                     IconButton(
@@ -109,10 +111,14 @@ class _NavState extends State<NavPage> {
                         },
                         icon: Icon((FontAwesomeIcons.bars))),
                   )),
-              body: Center(child: screens.elementAt(currentTap)),
-              bottomNavigationBar: BottomNavigationBar(
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
+              // body: Center(child: screens.elementAt(currentTap)),
+              // bottomNavigationBar: BottomNavigationBar(
+              body: IndexedStack(
+                index: currentTap,
+                children: screens,),
+                bottomNavigationBar: BottomNavigationBar(
+                 showSelectedLabels: false,
+                 showUnselectedLabels: false,
                 backgroundColor: Color.fromRGBO(66, 194, 255, 1),
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
@@ -135,7 +141,6 @@ class _NavState extends State<NavPage> {
                 currentIndex: currentTap,
                 onTap: _onItemTap,
               ),
-              
             );
           }
           return Scaffold(

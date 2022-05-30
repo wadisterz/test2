@@ -59,8 +59,33 @@ class _ProfileState extends State<ProfilePage> {
           if (snapshot.connectionState == ConnectionState.done) {
             return Scaffold(
         backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-                  body: Container(
-                    child: Text("this is profile"),
+                  body: Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 200,
+                          width: 400,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(66, 194, 255, 1),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(50),
+                              bottomRight: Radius.circular(50),
+                            )
+                          ),
+                          child: Row(
+                            children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: CircleAvatar(
+                                radius: 35,
+                                 backgroundImage: NetworkImage(
+                                           "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  ")
+                                         ),
+                            ),
+                          ]),
+                        ),
+                      ],
+                    ),
                   ),
                   
                   
