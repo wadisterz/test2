@@ -88,7 +88,7 @@ if (permission == LocationPermission.deniedForever) {
           print('map = $map');
           UserModel2 modelpost2 = UserModel2.fromMap(map);
       print("data initialize");
-      await FirebaseFirestore.instance.collection('deal').where('postbyid',isEqualTo: uid ).orderBy('succeed',descending: false).snapshots().listen((event) async {
+      await FirebaseFirestore.instance.collection('deal').where('postbyid',isEqualTo: uid ).snapshots().listen((event) async {
         if(refresh == true){
         for(var snapshots in event.docs){
           print('inloop = ${i}');
@@ -118,8 +118,7 @@ if (permission == LocationPermission.deniedForever) {
            children: [
              CircleAvatar(
                radius: 35,
-              backgroundImage: NetworkImage(
-               "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  ")
+                                 backgroundImage: AssetImage('images/default.png'),
              ),
              Column(
                children: [
@@ -186,7 +185,12 @@ if (permission == LocationPermission.deniedForever) {
          actions: <Widget>[
            Center(
              child: ElevatedButton(
-             child: Text("chat",
+             child: model.succeed == false ?  Text("Deal",
+             style: TextStyle(
+                             fontSize: 25,
+                             color: Colors.white,
+                             fontWeight: FontWeight.bold),
+             ):Text("CloseDeal",
              style: TextStyle(
                              fontSize: 25,
                              color: Colors.white,

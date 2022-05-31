@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:first_flutter/Login.dart';
 import 'package:first_flutter/Model/UserModel.dart';
 import 'package:first_flutter/MyDeals.dart';
 import 'package:first_flutter/service/AddPostButton.dart';
@@ -11,6 +12,7 @@ import 'package:first_flutter/Register.dart';
 import 'package:first_flutter/main.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -105,23 +107,29 @@ class _MenuState extends State<MenuPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(66, 194, 255, 1),
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 1,
-                                      blurRadius: 4,
-                                      offset: Offset(0.0, 3.0))
-                                ]),
-                            width: 120,
-                            height: 100,
-                            child: Image.asset(
-                              'images/profileicon.png',
-                              height: 72,
-                              width: 72,
+                          child: GestureDetector(
+                            onTap: (){
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                            return NavPage();
+                            }));},
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Color.fromRGBO(66, 194, 255, 1),
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        spreadRadius: 1,
+                                        blurRadius: 4,
+                                        offset: Offset(0.0, 3.0))
+                                  ]),
+                              width: 120,
+                              height: 100,
+                              child: Image.asset(
+                                'images/profileicon.png',
+                                height: 72,
+                                width: 72,
+                              ),
                             ),
                           ),
                         ),
@@ -156,28 +164,35 @@ class _MenuState extends State<MenuPage> {
                       SizedBox(height:450),
                   Align(
                     alignment: FractionalOffset.bottomCenter,
-                    child: Container(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                          color: Color.fromRGBO(255, 123, 171, 1),
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                spreadRadius: 1,
-                                blurRadius: 4,
-                                offset: Offset(0.0, 3.0))
-                          ]),
-                      width: 350,
-                      height: 80,
-                      child: Center(
-                        child: Text(
-                          'LOGOUT',
-                          style: TextStyle(
-                              fontSize: 35,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
+                    child: GestureDetector(
+                      onTap: (() => auth.signOut().then((value) => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
+                        return LoginPage();
+                      })))
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 123, 171, 1),
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 1,
+                                  blurRadius: 4,
+                                  offset: Offset(0.0, 3.0))
+                            ]
+                            ),
+                        width: 350,
+                        height: 80,
+                          child: Center(
+                            child: Text(
+                              'LOGOUT',
+                              style: TextStyle(
+                                  fontSize: 35,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                       ),
                     ),
                   ),

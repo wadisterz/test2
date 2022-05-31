@@ -43,6 +43,8 @@ class _FeedsState extends State<FeedsPage> {
      super.initState();
      readtest();
    }
+
+
   Position? _currentUserPosition;
   double? distanceKM = 0.0;
 
@@ -134,6 +136,7 @@ if (permission == LocationPermission.deniedForever) {
   Widget createWidget(posttest model, int i , double diskm,UserModel2 modelpost2)=> 
      GestureDetector(
        onTap: (){
+                print("post.uid = ${model.uid}");
          showDialog(context: context, builder: (BuildContext context){
            return AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
          backgroundColor: Color.fromRGBO(47, 161, 215, 1),
@@ -142,8 +145,7 @@ if (permission == LocationPermission.deniedForever) {
            children: [
              CircleAvatar(
                radius: 35,
-              backgroundImage: NetworkImage(
-               "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  ")
+                                 backgroundImage: AssetImage('images/default.png'),
              ),
              Column(
                children: [
@@ -202,7 +204,7 @@ if (permission == LocationPermission.deniedForever) {
          actions: <Widget>[
            Center(
              child: ElevatedButton(
-             child: Text("chat",
+             child: Text("OFFER",
              style: TextStyle(
                              fontSize: 25,
                              color: Colors.white,
@@ -215,6 +217,10 @@ if (permission == LocationPermission.deniedForever) {
               minimumSize: Size(150, 50)
               ),
               onPressed: ()async {
+                      if(model.uid == uid){
+                        print("error");
+                      }
+                      else{
                       Navigator.of(context).pop();
                 await docDeal.add({
                 "dealid": "",
@@ -234,7 +240,7 @@ if (permission == LocationPermission.deniedForever) {
               });
                 // model.uid = คนโพส
                 //เด้งไป Chat
-              },
+               } },
              ),
            )
 
@@ -335,8 +341,7 @@ if (permission == LocationPermission.deniedForever) {
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     CircleAvatar(
                       radius: 35,
-                      backgroundImage: NetworkImage(
-                          "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  "),
+                                 backgroundImage: AssetImage('images/default.png'),
                     ),
                     
                          FutureBuilder<UserModel?>(
@@ -429,7 +434,7 @@ if (permission == LocationPermission.deniedForever) {
               actions: <Widget>[
                 Center(
                   child: ElevatedButton(
-                    child: Text("OFFER",
+                    child: Text("Post",
                     style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
