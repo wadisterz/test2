@@ -2,18 +2,20 @@
 import 'dart:convert';
 
 class DealModel {
-  final String deaiid;
+  final String dealid;
   final String heading;
   final String detail;
+  final String location;
   final String postbyid;
   final String takebyid;
   final String postby;
   final String takeby;
   final bool succeed;
   DealModel({
-    required this.deaiid,
+    required this.dealid,
     required this.heading,
     required this.detail,
+    required this.location,
     required this.postbyid,
     required this.takebyid,
     required this.postby,
@@ -24,9 +26,10 @@ class DealModel {
 
 
   DealModel copyWith({
-    String? deaiid,
+    String? dealid,
     String? heading,
     String? detail,
+    String? location,
     String? postbyid,
     String? takebyid,
     String? postby,
@@ -34,9 +37,10 @@ class DealModel {
     bool? succeed,
   }) {
     return DealModel(
-      deaiid: deaiid ?? this.deaiid,
+      dealid: dealid ?? this.dealid,
       heading: heading ?? this.heading,
       detail: detail ?? this.detail,
+      location: location ?? this.location,
       postbyid: postbyid ?? this.postbyid,
       takebyid: takebyid ?? this.takebyid,
       postby: postby ?? this.postby,
@@ -47,9 +51,10 @@ class DealModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'deaiid': deaiid,
+      'dealid': dealid,
       'heading': heading,
       'detail': detail,
+      'location': location,
       'postbyid': postbyid,
       'takebyid': takebyid,
       'postby': postby,
@@ -60,9 +65,10 @@ class DealModel {
 
   factory DealModel.fromMap(Map<String, dynamic> map) {
     return DealModel(
-      deaiid: map['deaiid'] as String,
+      dealid: map['dealid'] as String,
       heading: map['heading'] as String,
       detail: map['detail'] as String,
+      location: map['location'] as String,
       postbyid: map['postbyid'] as String,
       takebyid: map['takebyid'] as String,
       postby: map['postby'] as String,
@@ -77,7 +83,7 @@ class DealModel {
 
   @override
   String toString() {
-    return 'DealModel(deaiid: $deaiid, heading: $heading, detail: $detail, postbyid: $postbyid, takebyid: $takebyid, postby: $postby, takeby: $takeby, succeed: $succeed)';
+    return 'DealModel(dealid: $dealid, heading: $heading, detail: $detail, location: $location, postbyid: $postbyid, takebyid: $takebyid, postby: $postby, takeby: $takeby, succeed: $succeed)';
   }
 
   @override
@@ -85,9 +91,10 @@ class DealModel {
     if (identical(this, other)) return true;
   
     return other is DealModel &&
-      other.deaiid == deaiid &&
+      other.dealid == dealid &&
       other.heading == heading &&
       other.detail == detail &&
+      other.location == location &&
       other.postbyid == postbyid &&
       other.takebyid == takebyid &&
       other.postby == postby &&
@@ -97,9 +104,10 @@ class DealModel {
 
   @override
   int get hashCode {
-    return deaiid.hashCode ^
+    return dealid.hashCode ^
       heading.hashCode ^
       detail.hashCode ^
+      location.hashCode ^
       postbyid.hashCode ^
       takebyid.hashCode ^
       postby.hashCode ^
