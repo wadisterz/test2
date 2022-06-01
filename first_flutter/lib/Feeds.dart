@@ -23,7 +23,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Model/UserModel2.dart';
 import 'service/FeedBox.dart';
+import 'package:get/get.dart';
+import 'package:geolocator_android/geolocator_android.dart';
+
 
 class FeedsPage extends StatefulWidget {
   const FeedsPage({Key? key}) : super(key: key);
@@ -39,6 +43,8 @@ class _FeedsState extends State<FeedsPage> {
      super.initState();
      readtest();
    }
+
+
   Position? _currentUserPosition;
   double? distanceKM = 0.0;
 
@@ -91,17 +97,33 @@ if (permission == LocationPermission.deniedForever) {
     bool refresh = true;
   Future<Null> readtest() async{
     await Firebase.initializeApp().then((value) async {
+          final docUser = FirebaseFirestore.instance.collection('user').doc(uid);
+    final snapshot = await docUser.get();
+          Map<String, dynamic> map = snapshot.data()!;
+          print('map = $map');
+          UserModel2 modelpost2 = UserModel2.fromMap(map);
       print("data initialize");
-      await FirebaseFirestore.instance.collection('post').orderBy('status',descending: false).snapshots().listen((event) {
+      await FirebaseFirestore.instance.collection('post').orderBy('status',descending: false).snapshots().listen((event) async {
         if(refresh == true){
         for(var snapshots in event.docs){
           print('inloop = ${i}');
           Map<String, dynamic> map = snapshots.data();
           print('map = $map');
           posttest modelpost = posttest.fromMap(map);
+    _currentUserPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print(_currentUserPosition!.latitude);
+    print(_currentUserPosition!.longitude);
+    print("modelpost la = ${modelpost.latitude}");
+    print("modelpost long = ${modelpost.longitude}");
+    double storelat = modelpost.latitude;
+    double storelong = modelpost.longitude;
+    distanceKM = await (Geolocator.distanceBetween(_currentUserPosition!.latitude, _currentUserPosition!.longitude, storelat, storelong)/1000);
+    print("distance = $distanceKM");
+      if(distanceKM! < 5 ){
           setState(() {
-            widgets.add(createWidget(modelpost,i));
-          });
+            widgets.add(createWidget(modelpost,i,distanceKM!,modelpost2));
+          print("done-----------------------------------------");
+          });}
           print("widgets lengtt = ${widgets.length}");
           i++;
           }
@@ -111,9 +133,10 @@ if (permission == LocationPermission.deniedForever) {
     });
   }
   
-  Widget createWidget(posttest model, int i)=> 
+  Widget createWidget(posttest model, int i , double diskm,UserModel2 modelpost2)=> 
      GestureDetector(
        onTap: (){
+                print("post.uid = ${model.uid}");
          showDialog(context: context, builder: (BuildContext context){
            return AlertDialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
          backgroundColor: Color.fromRGBO(47, 161, 215, 1),
@@ -122,8 +145,7 @@ if (permission == LocationPermission.deniedForever) {
            children: [
              CircleAvatar(
                radius: 35,
-              backgroundImage: NetworkImage(
-               "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  ")
+                                 backgroundImage: AssetImage('images/default.png'),
              ),
              Column(
                children: [
@@ -182,7 +204,7 @@ if (permission == LocationPermission.deniedForever) {
          actions: <Widget>[
            Center(
              child: ElevatedButton(
-             child: Text("chat",
+             child: Text("OFFER",
              style: TextStyle(
                              fontSize: 25,
                              color: Colors.white,
@@ -194,10 +216,31 @@ if (permission == LocationPermission.deniedForever) {
               padding: EdgeInsets.all(1),
               minimumSize: Size(150, 50)
               ),
-              onPressed: (){
+              onPressed: ()async {
+                      if(model.uid == uid){
+                        print("error");
+                      }
+                      else{
+                      Navigator.of(context).pop();
+                await docDeal.add({
+                "dealid": "",
+                "heading": model.heading,
+                "detail": model.text,
+                "location": model.location,
+                "postbyid": model.uid,
+                "takebyid": auth.currentUser!.uid,
+                "postby": model.postby,
+                "takeby": modelpost2.username,
+                "succeed": false,
+              }).then((value) => docDeal.doc(value.id).update({
+                "dealid": value.id
+              }));
+                await docPost.doc(model.pid).update({
+                  "status":  true
+              });
                 // model.uid = คนโพส
                 //เด้งไป Chat
-              },
+               } },
              ),
            )
 
@@ -211,13 +254,12 @@ if (permission == LocationPermission.deniedForever) {
          });
          print("objecct${i}");
          print("click post ${model.pid}");
-
        },
        child: Container(
          height: 160,
          child: Column(
            children: [
-              FeedBox(model.postby,model.heading,model.location,model.status),
+              FeedBox(model.postby,model.heading,"${diskm.toStringAsFixed(1)} km",model.status),
            ],
          ),
        ),
@@ -231,6 +273,9 @@ if (permission == LocationPermission.deniedForever) {
   Stream<List<PostModel>> readPostz()=> FirebaseFirestore.instance.collection('post').snapshots().map((snapshot)=>
   snapshot.docs.map((doc) => PostModel.fromJson(doc.data())).toList());
 
+
+
+
   
   
   // --------------
@@ -243,7 +288,12 @@ if (permission == LocationPermission.deniedForever) {
   //if(snapshot.exists){
   //}
   }
+
     CollectionReference docPost= FirebaseFirestore.instance.collection('post');
+    CollectionReference docDeal= FirebaseFirestore.instance.collection('deal');
+
+
+
   Widget BuildUser(UserModel user){
     if(user.username == null){
                              return Text("null",
@@ -268,7 +318,7 @@ if (permission == LocationPermission.deniedForever) {
                              
     }
   }
-  PostModel postmodel = PostModel(pid: "", uid: "", postby: "", heading: "", location: "", status: false, text: "", profileUrl: "");
+  PostModel postmodel = PostModel(pid: "", uid: "", postby: "", heading: "", location: "", status: false, text: "", profileUrl: "",latitude: 0.0, longitude: 0.0);
 
   
 
@@ -291,8 +341,7 @@ if (permission == LocationPermission.deniedForever) {
                   child: Column(mainAxisSize: MainAxisSize.min, children: [
                     CircleAvatar(
                       radius: 35,
-                      backgroundImage: NetworkImage(
-                          "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  "),
+                                 backgroundImage: AssetImage('images/default.png'),
                     ),
                     
                          FutureBuilder<UserModel?>(
@@ -385,7 +434,14 @@ if (permission == LocationPermission.deniedForever) {
               actions: <Widget>[
                 Center(
                   child: ElevatedButton(
-                    child: Text("test2"),
+                    child: Text("Post",
+                    style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold
+                    )
+                    
+                    ),
                     style: ElevatedButton.styleFrom(
                         primary: Color.fromRGBO(11, 119, 170, 1),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -413,7 +469,9 @@ if (permission == LocationPermission.deniedForever) {
                         "location": postmodel.location,
                         "status": postmodel.status,
                         "text":  postmodel.text,
-                        "profileUrl": postmodel.profileUrl
+                        "profileUrl": postmodel.profileUrl,
+                        "latitude": _currentUserPosition!.latitude,
+                        "longitude": _currentUserPosition!.longitude
                       }).then((value) => docPost.doc(value.id).update({
                         "pid": value.id
                       }));
@@ -430,6 +488,7 @@ if (permission == LocationPermission.deniedForever) {
   final formKey = GlobalKey<FormState>();
 
   UserModel profile = UserModel(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
+  UserModel2 profile2 = UserModel2(uid: '', username: '', password: '', email: '',profileUrl: '' ,bio: '' ,rate: 0, succeedcount:0 );
   bool _showPassword = true;
   String? _Cpassword;
   int currentTap = 0;
@@ -463,7 +522,7 @@ if (permission == LocationPermission.deniedForever) {
                       builder: (context, snapshot) {
                         return Scaffold(
                           backgroundColor: Color.fromRGBO(133, 244, 255, 1),
-                          body: widgets == 0 ? Center(child: CircularProgressIndicator(),):RefreshIndicator
+                          body: widgets.length == 0 ? Center(child: CircularProgressIndicator(),):RefreshIndicator
                           (
                             onRefresh: readtest,
                             child: ListView(

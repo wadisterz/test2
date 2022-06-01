@@ -7,7 +7,9 @@ class PostModel {
   bool? status;
   String? text;
   String? profileUrl;
-  PostModel({required this.pid,required this.uid ,required this.postby, required this.heading,required this.location,required this.status,required this.text, required this.profileUrl});
+  final double latitude;
+  final double longitude;
+  PostModel({required this.pid,required this.uid ,required this.postby, required this.heading,required this.location,required this.status,required this.text, required this.profileUrl, required this.latitude, required this.longitude});
   Map<String , dynamic> toJson() =>{
     'pid' : pid,
     'uid' : uid,
@@ -27,6 +29,8 @@ class PostModel {
     status: json['status'],
     text: json['text'],
     profileUrl: json['profileUrl'],
+    latitude: json['latitude'],
+    longitude: json['longitude']
     
   );
  //int dealcount = 0 ;

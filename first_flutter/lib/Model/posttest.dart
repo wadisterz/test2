@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class posttest {
@@ -11,6 +10,8 @@ class posttest {
   final bool status;
   final String text;
   final String profileUrl;
+  final double latitude;
+  final double longitude;
   posttest({
     required this.pid,
     required this.uid,
@@ -20,6 +21,8 @@ class posttest {
     required this.status,
     required this.text,
     required this.profileUrl,
+    required this.latitude,
+    required this.longitude,
   });
 
   posttest copyWith({
@@ -31,6 +34,8 @@ class posttest {
     bool? status,
     String? text,
     String? profileUrl,
+    double? latitude,
+    double? longitude,
   }) {
     return posttest(
       pid: pid ?? this.pid,
@@ -41,6 +46,8 @@ class posttest {
       status: status ?? this.status,
       text: text ?? this.text,
       profileUrl: profileUrl ?? this.profileUrl,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 
@@ -54,6 +61,8 @@ class posttest {
       'status': status,
       'text': text,
       'profileUrl': profileUrl,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
@@ -67,6 +76,8 @@ class posttest {
       status: map['status'] as bool,
       text: map['text'] as String,
       profileUrl: map['profileUrl'] as String,
+      latitude: map['latitude'] as double,
+      longitude: map['longitude'] as double,
     );
   }
 
@@ -76,7 +87,7 @@ class posttest {
 
   @override
   String toString() {
-    return 'posttest(pid: $pid, uid: $uid, postby: $postby, : $heading, location: $location, status: $status, text: $text, profileUrl: $profileUrl)';
+    return 'posttest(pid: $pid, uid: $uid, postby: $postby, : $heading, location: $location, status: $status, text: $text, profileUrl: $profileUrl,latitude: $latitude,longitude: $longitude)';
   }
 
   @override
@@ -91,7 +102,10 @@ class posttest {
       other.location == location &&
       other.status == status &&
       other.text == text &&
-      other.profileUrl == profileUrl;
+      other.profileUrl == profileUrl &&
+      other.latitude == latitude &&
+      other.longitude == longitude;
+      
   }
 
   @override
@@ -103,6 +117,8 @@ class posttest {
       location.hashCode ^
       status.hashCode ^
       text.hashCode ^
-      profileUrl.hashCode;
+      profileUrl.hashCode ^
+      latitude.hashCode ^
+      longitude.hashCode;
   }
 }

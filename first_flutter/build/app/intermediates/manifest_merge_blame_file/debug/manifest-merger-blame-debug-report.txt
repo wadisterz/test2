@@ -33,7 +33,7 @@
 22-->[androidx.core:core:1.6.0] C:\Users\waray\.gradle\caches\transforms-2\files-2.1\14b93615368c2249f1830e26ca064ab5\core-1.6.0\AndroidManifest.xml:24:18-86
 23        android:debuggable="true"
 24        android:icon="@mipmap/ic_launcher"
-25        android:label="first_flutter" >
+25        android:label="MyDeal" >
 26        <activity
 27            android:name="com.example.first_flutter.MainActivity"
 28            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

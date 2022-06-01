@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
+import 'package:first_flutter/Feeds.dart';
 import 'package:first_flutter/Model/UserModel.dart';
 import 'package:first_flutter/Nav.dart';
 import 'package:first_flutter/Register.dart';

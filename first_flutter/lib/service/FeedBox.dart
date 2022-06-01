@@ -18,6 +18,7 @@ class FeedBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("dis km = ${gps}");
     return Container(
       padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
@@ -37,8 +38,7 @@ class FeedBox extends StatelessWidget {
           Container(
             child: CircleAvatar(
                 radius: 35,
-                backgroundImage: NetworkImage(
-                    "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/03/GettyImages-1092658864_hero-1024x575.jpg  ")),
+                                 backgroundImage: AssetImage('images/default.png')),
           ),
           Padding(padding: EdgeInsets.only(left: 4)),
           Expanded(
